@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="20dp"
+    tools:context=".feature.list_movies.presentation.HomeFeed">
+
+    <LinearLayout
+        android:id="@+id/layout_genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        tools:ignore="TouchTargetSizeCheck">
+
+        <TextView
+            android:id="@+id/tvGenreText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/SeeAllText"
+            android:textStyle="bold"
+            android:text="Popular" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvShowGenres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/SeeAllText"
+                android:textStyle="bold"
+                android:text="See all" />
+
+            <ImageView
+                android:id="@+id/ivSeeAllIcon"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:src="@drawable/arrow_right"
+                android:layout_marginStart="8dp"
+                android:contentDescription="sdfsdf" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerviewHomeFeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="true"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/home_movie_item" />
+
+</LinearLayout>

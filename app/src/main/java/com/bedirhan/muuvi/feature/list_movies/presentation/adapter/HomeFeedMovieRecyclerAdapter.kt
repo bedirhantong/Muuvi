@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bedirhan.muuvi.databinding.HomeMovieItemBinding
 import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.HomeMovieUiModel
 
-class HomeFeedPopularMovieRecyclerAdapter() :
+class HomeFeedMovieRecyclerAdapter() :
     ListAdapter<HomeMovieUiModel, HomeMovieViewHolder>(MovieDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : HomeMovieViewHolder {

@@ -13,9 +13,22 @@ interface MovieApiService {
         @Query("api_key") apiKey: String =NEWS_API_KEY
     ): Response<MovieDto>
 
+    @GET(UPCOMING)
+    suspend fun getUpcomingMovies(
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String =NEWS_API_KEY
+    ): Response<MovieDto>
+
+    @GET(POPULAR)
+    suspend fun getPopularMovies(
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String =NEWS_API_KEY
+    ): Response<MovieDto>
+
     companion object {
         const val NEWS_API_KEY = BuildConfig.API_KEY
-        const val LANGUAGE = "us"
         const val TOP_RATED = "movie/top_rated"
+        const val UPCOMING = "movie/upcoming"
+        const val POPULAR = "movie/popular"
     }
 }

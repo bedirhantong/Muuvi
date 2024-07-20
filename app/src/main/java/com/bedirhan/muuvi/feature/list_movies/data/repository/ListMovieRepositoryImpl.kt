@@ -14,4 +14,14 @@ class ListMovieRepositoryImpl  @Inject constructor(
         val response = apiService.getTopRatedMovies().body()
         return response?.let { movieMapper.toDomain(it) }
     }
+
+    override suspend fun getUpcomingMovies(): MovieListUiModel? {
+        val response = apiService.getUpcomingMovies().body()
+        return response?.let { movieMapper.toDomain(it) }
+    }
+
+    override suspend fun getPopularMovies(): MovieListUiModel? {
+        val response = apiService.getPopularMovies().body()
+        return response?.let { movieMapper.toDomain(it) }
+    }
 }

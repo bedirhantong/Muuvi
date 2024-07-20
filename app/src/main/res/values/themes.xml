@@ -3,6 +3,9 @@
     <style name="Base.Theme.Muuvi" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="Theme.Muuvi" parent="Base.Theme.Muuvi" />
@@ -13,5 +16,12 @@
     <style name="SeeAllText" parent="@android:style/TextAppearance">
         <item name="android:textColor">@color/showAllTextColor</item>
         <item name="android:textSize">@dimen/extra_large_size</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlayAppCornerSize">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+        <item name="strokeWidth">2dp</item>
+        <item name="strokeColor">@color/colorPrimaryDark</item>
     </style>
 </resources>

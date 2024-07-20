@@ -51,10 +51,19 @@ class MovieMapper {
         }
 
     // toDomainList
-    fun toDomain(response: MovieDto): MovieListUiModel = MovieListUiModel(
-        page = response.page,
-        totalResults = response.totalPages,
-        totalPages = response.totalPages,
-        results = response.results
-    )
+    fun toDomain(response: MovieDto): MovieListUiModel? =
+        response.results?.let { toDomainList(it) }?.let {
+            response.totalPages?.let {it1->
+                response.totalResults?.let {it2->
+                    response.page?.let {it3->
+                        MovieListUiModel(
+                            results = it,
+                            page = it3,
+                            totalResults = it2,
+                            totalPages = it1
+                        )
+                    }
+                }
+            }
+        }
 }

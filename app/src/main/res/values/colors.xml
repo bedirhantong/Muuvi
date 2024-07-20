@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="colorPrimary">#E86A33</color> <!-- Ana renk -->
+    <color name="colorSecondary">#B0B3B8</color> <!-- Koyu ana renk -->
+    <color name="colorPrimaryDark">#1E2C3F</color> <!-- Vurgu renk -->
+    <color name="colorAccent">#E39D36</color>
+    <color name="showAllTextColor">#000000</color>
 </resources>

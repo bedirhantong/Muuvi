@@ -1,6 +1,7 @@
 package com.bedirhan.muuvi.core
 
 import com.bedirhan.muuvi.feature.list_movies.data.remote.MovieApiService
+import com.bedirhan.muuvi.feature.movie_detail_screen.data.remote.MovieDetailApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,18 +17,24 @@ class NetworkModule {
     @Provides
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(NEWS_BASE_URL)
+            .baseUrl(MOVIE_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     @Singleton
     @Provides
-    fun provideNewsService(retrofit: Retrofit): MovieApiService {
+    fun provideMovieService(retrofit: Retrofit): MovieApiService {
         return retrofit.create(MovieApiService::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun provideMovieDetailServices(retrofit: Retrofit):MovieDetailApiService{
+        return retrofit.create(MovieDetailApiService::class.java)
+    }
+
     companion object {
-        const val NEWS_BASE_URL = "https://api.themoviedb.org/3/"
+        const val MOVIE_BASE_URL = "https://api.themoviedb.org/3/"
     }
 }

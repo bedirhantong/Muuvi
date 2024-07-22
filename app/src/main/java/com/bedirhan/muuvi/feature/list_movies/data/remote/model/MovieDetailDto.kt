@@ -2,7 +2,7 @@ package com.bedirhan.muuvi.feature.list_movies.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class DetailedMovieDto(
+data class MovieDetailDto(
     val adult: Boolean?,
     @SerializedName("backdrop_path")
     val backdropPath: String?,

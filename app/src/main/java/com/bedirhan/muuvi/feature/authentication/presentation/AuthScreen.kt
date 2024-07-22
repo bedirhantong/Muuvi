@@ -32,7 +32,7 @@ class AuthScreen : Fragment(), View.OnClickListener, View.OnFocusChangeListener,
         val loginButton = binding.registerButton
         loginButton.setOnClickListener {
             val email = binding.edtEmail.text.toString()
-            val action = AuthScreenDirections.actionAuthScreenToHomeFeed(email)
+            val action = AuthScreenDirections.actionAuthScreenToHomeScreen(email)
             findNavController().navigate(action)
         }
         binding.edtEmail.addTextChangedListener(loginTextWatcher)

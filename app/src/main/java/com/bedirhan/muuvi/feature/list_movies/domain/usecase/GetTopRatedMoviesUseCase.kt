@@ -1,11 +1,11 @@
 package com.bedirhan.muuvi.feature.list_movies.domain.usecase
 
-import com.bedirhan.muuvi.feature.list_movies.domain.ListMovieRepository
+import com.bedirhan.muuvi.feature.list_movies.domain.MovieRepository
 import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieListUiModel
 import javax.inject.Inject
 
 class GetTopRatedMoviesUseCase @Inject constructor(
-    private val listMovieRepository: ListMovieRepository
+    private val listMovieRepository: MovieRepository
 ) {
     suspend operator fun invoke(): MovieListUiModel?{
         return listMovieRepository.getTopRatedMovies()

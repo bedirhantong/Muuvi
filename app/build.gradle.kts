@@ -83,6 +83,12 @@ dependencies {
     //glide
     implementation("com.github.bumptech.glide:glide:4.12.0")
     kapt("com.github.bumptech.glide:compiler:4.12.0")
+
+    // viewpager
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    // circular indicator
+    implementation("me.relex:circleindicator:2.1.6")
 }
 
 // Hilt

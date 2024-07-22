@@ -1,9 +1,10 @@
 package com.bedirhan.muuvi.feature.list_movies.presentation
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.HomeMovieUiModel
+import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.list_movies.domain.usecase.GetPopularMoviesUseCase
 import com.bedirhan.muuvi.feature.list_movies.domain.usecase.GetTopRatedMoviesUseCase
 import com.bedirhan.muuvi.feature.list_movies.domain.usecase.GetUpcomingMoviesUseCase
@@ -18,18 +19,18 @@ class HomeFeedViewModel  @Inject constructor(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ):ViewModel(){
-    private val _topRatedMoviesLiveData = MutableLiveData<List<HomeMovieUiModel?>?>()
-    val topRatedMoviesLiveData: MutableLiveData<List<HomeMovieUiModel?>?>
+    private val _topRatedMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
+    val topRatedMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
         get() = _topRatedMoviesLiveData
 
 
-    private val _upcomingMoviesLiveData = MutableLiveData<List<HomeMovieUiModel?>?>()
-    val upcomingMoviesLiveData: MutableLiveData<List<HomeMovieUiModel?>?>
+    private val _upcomingMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
+    val upcomingMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
         get() = _upcomingMoviesLiveData
 
 
-    private val _popularMoviesLiveData = MutableLiveData<List<HomeMovieUiModel?>?>()
-    val popularMoviesLiveData: MutableLiveData<List<HomeMovieUiModel?>?>
+    private val _popularMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
+    val popularMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
         get() = _popularMoviesLiveData
 
 
@@ -37,11 +38,12 @@ class HomeFeedViewModel  @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val movies = getTopRatedMoviesUseCase()
-                if (movies != null) {
+                movies?.let {
                     _topRatedMoviesLiveData.postValue(movies.results)
                 }
+
             } catch (e: Exception) {
-                println(e)
+                Log.d("get", e.toString())
             }
         }
     }

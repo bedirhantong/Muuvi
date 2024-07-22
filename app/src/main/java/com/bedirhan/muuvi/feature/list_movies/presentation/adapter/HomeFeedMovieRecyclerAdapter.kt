@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bedirhan.muuvi.databinding.HomeMovieItemBinding
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.HomeMovieUiModel
+import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
 
 class HomeFeedMovieRecyclerAdapter() :
-    ListAdapter<HomeMovieUiModel, HomeMovieViewHolder>(MovieDiffCallBack()) {
+    ListAdapter<MovieUiModel, HomeMovieViewHolder>(MovieDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             : HomeMovieViewHolder {
         return HomeMovieViewHolder(

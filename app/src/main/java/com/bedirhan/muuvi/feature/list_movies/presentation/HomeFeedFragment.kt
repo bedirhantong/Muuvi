@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HomeFeed : Fragment() {
+class HomeFeedFragment : Fragment() {
     private var _binding: FragmentHomeFeedBinding? = null
     private val binding get() = _binding!!
 
@@ -36,9 +36,9 @@ class HomeFeed : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeFeedBinding.inflate(inflater, container, false)
-        setupRecyclerViews()
-        observeMovies()
-        collectApiRequest()
+//        setupRecyclerViews()
+//        observeMovies()
+//        collectApiRequest()
         return binding.root
     }
 
@@ -52,11 +52,9 @@ class HomeFeed : Fragment() {
     private fun collectApiRequest() = binding.apply {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.getPopularMovies()
-                    viewModel.getTopRatedMovies()
-                    viewModel.getUpcomingMovies()
-                }
+                viewModel.getPopularMovies()
+                viewModel.getTopRatedMovies()
+                viewModel.getUpcomingMovies()
             }
         }
     }
@@ -72,11 +70,9 @@ class HomeFeed : Fragment() {
             viewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) { articles ->
                 topRatedMoviesRecyclerAdapter.submitList(articles)
             }
-
             viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) { articles ->
                 popularMoviesRecyclerAdapter.submitList(articles)
             }
-
             viewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) { articles ->
                 upcomingMoviesRecyclerAdapter.submitList(articles)
             }

@@ -5,7 +5,12 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.51.1" apply false
 }
 buildscript {
+    repositories {
+        google()
+    }
     dependencies {
         classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+        val navVersion = "2.7.7"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
     }
 }

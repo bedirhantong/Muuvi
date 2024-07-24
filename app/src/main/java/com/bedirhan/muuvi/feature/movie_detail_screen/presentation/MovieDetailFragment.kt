@@ -5,15 +5,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.bedirhan.muuvi.common.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.common.Resource
+import com.bedirhan.muuvi.common.loadImage
 import com.bedirhan.muuvi.databinding.FragmentMovieDetailBinding
-import com.bumptech.glide.Glide
+import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
 import dagger.hilt.android.AndroidEntryPoint
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MovieDetailFragment : Fragment() {
@@ -29,38 +34,47 @@ class MovieDetailFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         val view = binding.root
-        setupObservers()
+        observeMovieDetail()
         movieDetailViewModel.getMovieDetail(getArgs())
         return view
     }
 
-    private fun setupObservers() {
+    private fun observeMovieDetail() =
         binding.apply {
-            movieDetailViewModel.movieDetailLiveData.observe(viewLifecycleOwner) { resource ->
-                when (resource) {
-                    is Resource.Loading -> {
-                        showShimmerEffect(true)
-                    }
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    movieDetailViewModel.getMovieDetail(getArgs())
+                    movieDetailViewModel.movieDetail.collectLatest { resource ->
+                        when (resource) {
+                            is Resource.Loading -> {
+                                showShimmerEffect(true)
+                            }
 
-                    is Resource.Success -> {
-                        showShimmerEffect(false)
-                        resource.data?.let { movieDetail ->
-                            ivBackdropDetails.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.backdropPath)
-                            ivPoster.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.posterPath)
-                            tvMovieTitle.text = movieDetail.title ?: "No Title"
-                            tvReleaseDate.text = "Release Date: ${movieDetail.releaseDate ?: "N/A"}"
-                            tvOverview.text = movieDetail.overview ?: "No Overview"
-                            tvRating.text = "Rating: ${movieDetail.voteAverage ?: "N/A"}/10"
+                            is Resource.Success -> {
+                                showShimmerEffect(false)
+                                resource.data?.let { movieDetail ->
+                                    bindMovieDetail(movieDetail)
+                                }
+                            }
+
+                            is Resource.Error -> {
+                                showShimmerEffect(false)
+                                showError(resource.message)
+                            }
                         }
-                    }
-
-                    is Resource.Error -> {
-                        showShimmerEffect(false)
-                        showError(resource.message)
                     }
                 }
             }
         }
+
+    private fun FragmentMovieDetailBinding.bindMovieDetail(movieDetail: MovieDetailUiModel) {
+        ivBackdropDetails.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.backdropPath)
+        ivPoster.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.posterPath)
+        tvMovieTitle.text = movieDetail.title ?: "No Title"
+        tvReleaseDate.text =
+            "Release Date: ${movieDetail.releaseDate ?: "N/A"}"
+        tvOverview.text = movieDetail.overview ?: "No Overview"
+        tvRating.text = "Rating: ${movieDetail.voteAverage ?: "N/A"}/10"
     }
 
     private fun showShimmerEffect(show: Boolean) {
@@ -77,12 +91,6 @@ class MovieDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    fun ImageView.loadImage(url: String) {
-        Glide.with(this.context)
-            .load(url)
-            .into(this)
     }
 }
 

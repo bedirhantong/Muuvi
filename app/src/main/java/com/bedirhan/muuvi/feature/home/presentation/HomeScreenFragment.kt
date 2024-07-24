@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bedirhan.muuvi.databinding.FragmentHomeScreenBinding
-import com.bedirhan.muuvi.feature.list_movies.presentation.adapter.HomeFeedMovieRecyclerAdapter
+import com.bedirhan.muuvi.feature.list_movies.presentation.adapter.MovieRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 @AndroidEntryPoint
@@ -21,14 +21,14 @@ class HomeScreenFragment : Fragment() {
 
     private val viewModel: HomeScreenViewModel by viewModels()
 
-    private val topRatedMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter(::onClickMovie)
+    private val topRatedMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
     }
-    private val popularMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter(::onClickMovie)
+    private val popularMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
     }
-    private val upcomingMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter(::onClickMovie)
+    private val upcomingMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -7,23 +7,35 @@ import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
 import com.bedirhan.muuvi.feature.movie_detail_screen.domain.usecase.GetMovieDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
 class MovieDetailFragmentViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
-    private val _movieDetailLiveData = MutableLiveData<Resource<MovieDetailUiModel?>>()
-    val movieDetailLiveData: MutableLiveData<Resource<MovieDetailUiModel?>>
-        get() = _movieDetailLiveData
+    private val _movieDetail = MutableStateFlow<Resource<MovieDetailUiModel?>>(Resource.Loading())
+    val movieDetail: StateFlow<Resource<MovieDetailUiModel?>> = _movieDetail
 
     fun getMovieDetail(movieId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _movieDetailLiveData.postValue(Resource.Loading())
-            val result = getMovieDetailUseCase(movieId)
-            _movieDetailLiveData.postValue(result)
-        }
+        getMovieDetailUseCase.invoke(movieId)
+            .onEach { resource ->
+                when(resource){
+                    is Resource.Loading -> {
+                        _movieDetail.value = Resource.Loading()
+                    }
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            _movieDetail.value = Resource.Success(resource.data)
+                        }
+                    }
+                    is Resource.Error -> {
+                        _movieDetail.value = Resource.Error(resource.message)
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 }

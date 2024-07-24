@@ -2,8 +2,8 @@ package com.bedirhan.muuvi.feature.list_movies.data.di
 
 import com.bedirhan.muuvi.common.mapper.movies.MovieMapper
 import com.bedirhan.muuvi.feature.list_movies.data.remote.MovieApiService
-import com.bedirhan.muuvi.feature.list_movies.data.repository.ListMovieRepositoryImpl
-import com.bedirhan.muuvi.feature.list_movies.domain.ListMovieRepository
+import com.bedirhan.muuvi.feature.list_movies.data.repository.MovieRepositoryImpl
+import com.bedirhan.muuvi.feature.list_movies.domain.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,19 +12,19 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ListMoviesModule {
+class MoviesModule {
     @Provides
     @Singleton
-    fun provideNewsMapper(): MovieMapper {
+    fun provideMovieMapper(): MovieMapper {
         return MovieMapper()
     }
 
     @Provides
     @Singleton
-    fun provideNewsRepository(
+    fun provideMovieRepository(
         apiService: MovieApiService,
-        newsMapper: MovieMapper
-    ): ListMovieRepository {
-        return ListMovieRepositoryImpl(apiService, newsMapper)
+        movieMapper: MovieMapper
+    ): MovieRepository {
+        return MovieRepositoryImpl(apiService, movieMapper)
     }
 }

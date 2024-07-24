@@ -6,29 +6,40 @@
     app:startDestination="@id/authScreen">
 
     <fragment
-        android:id="@+id/homeFeed"
-        android:name="com.bedirhan.muuvi.feature.list_movies.presentation.HomeFeedFragment"
-        android:label="fragment_home_feed"
-        tools:layout="@layout/fragment_home_feed">
-        <argument
-            android:name="userEmail"
-            app:argType="string"
-            android:defaultValue=""/>
-    </fragment>
-
-    <fragment
         android:id="@+id/authScreen"
         android:name="com.bedirhan.muuvi.feature.authentication.presentation.AuthScreen"
         android:label="fragment_auth_screen"
         tools:layout="@layout/fragment_auth_screen">
         <action
-            android:id="@+id/action_authScreen_to_homeFeed"
-            app:destination="@id/homeFeed"
+            android:id="@+id/action_authScreen_to_homeScreen"
+            app:destination="@id/homeScreenFragment"
             app:popUpTo="@id/authScreen"
             app:popUpToInclusive="true">
             <argument
                 android:name="userEmail"
                 app:argType="string"/>
         </action>
+    </fragment>
+    <fragment
+        android:id="@+id/homeScreenFragment"
+        android:name="com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragment"
+        android:label="fragment_home_screen"
+        tools:layout="@layout/fragment_home_screen" >
+        <argument
+            android:name="userEmail"
+            app:argType="string"
+            android:defaultValue=""/>
+        <action
+            android:id="@+id/action_homeScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.bedirhan.muuvi.feature.movie_detail_screen.presentation.MovieDetailFragment"
+        android:label="fragment_movie_detail"
+        tools:layout="@layout/fragment_movie_detail" >
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
     </fragment>
 </navigation>

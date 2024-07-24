@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:background="@color/white"
-    tools:context=".feature.list_movies.presentation.HomeFeedFragment">
+    tools:context=".feature.list_movies.presentation.ListRecentMoviesFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

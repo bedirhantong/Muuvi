@@ -2,9 +2,15 @@
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="colorPrimary">#E86A33</color> <!-- Ana renk -->
-    <color name="colorSecondary">#B0B3B8</color> <!-- Koyu ana renk -->
-    <color name="colorPrimaryDark">#1E2C3F</color> <!-- Vurgu renk -->
+    <color name="colorPrimary">#E86A33</color>
+    <color name="colorSecondary">#B0B3B8</color>
+    <color name="colorPrimaryDark">#1E2C3F</color>
     <color name="colorAccent">#E39D36</color>
     <color name="showAllTextColor">#000000</color>
+
+    <color name="colorShimmerBackground">#979797</color>
+    <color name="colorShimmerForeground">#717171</color>
+    <color name="colorShimmerDescriptionLabel">#9099A8</color>
+    <color name="colorShimmerHeaderLabel">#686D75</color>
+    <color name="colorShimmerFooterLabel">#545557</color>
 </resources>

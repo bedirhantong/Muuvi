@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.feature.list_movies.presentation
+package com.bedirhan.muuvi.feature.home.presentation
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -14,15 +14,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeFeedViewModel  @Inject constructor(
+class HomeScreenViewModel @Inject constructor(
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
-):ViewModel(){
+) : ViewModel() {
     private val _topRatedMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
     val topRatedMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
         get() = _topRatedMoviesLiveData
-
 
     private val _upcomingMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
     val upcomingMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
@@ -43,7 +42,7 @@ class HomeFeedViewModel  @Inject constructor(
                 }
 
             } catch (e: Exception) {
-                Log.d("get", e.toString())
+                Log.d("get", e.message.toString())
             }
         }
     }
@@ -56,7 +55,7 @@ class HomeFeedViewModel  @Inject constructor(
                     _popularMoviesLiveData.postValue(movies.results)
                 }
             } catch (e: Exception) {
-                println(e)
+                Log.d("get", e.message.toString())
             }
         }
     }
@@ -69,9 +68,8 @@ class HomeFeedViewModel  @Inject constructor(
                     _upcomingMoviesLiveData.postValue(movies.results)
                 }
             } catch (e: Exception) {
-                println(e)
+                Log.d("get", e.message.toString())
             }
         }
     }
-
 }

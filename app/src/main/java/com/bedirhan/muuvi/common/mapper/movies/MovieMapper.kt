@@ -1,12 +1,12 @@
 package com.bedirhan.muuvi.common.mapper.movies
 
-import com.bedirhan.muuvi.feature.list_movies.data.remote.model.DetailedMovieDto
+import com.bedirhan.muuvi.feature.list_movies.data.remote.model.MovieDetailDto
 import com.bedirhan.muuvi.feature.list_movies.data.remote.model.MoviesDto
 import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieListUiModel
 
 class MovieMapper {
-    fun toDomain(response: DetailedMovieDto): MovieUiModel = MovieUiModel(
+    fun toDomain(response: MovieDetailDto): MovieUiModel = MovieUiModel(
         title = response.title,
         id = response.id,
         originalLanguage = response.originalLanguage,
@@ -23,7 +23,7 @@ class MovieMapper {
         overview = response.overview
     )
 
-    fun fromDomain(homeMovieUiModel: MovieUiModel): DetailedMovieDto = DetailedMovieDto(
+    fun fromDomain(homeMovieUiModel: MovieUiModel): MovieDetailDto = MovieDetailDto(
         originalTitle = homeMovieUiModel.originalTitle,
         posterPath = homeMovieUiModel.posterPath,
         releaseDate = homeMovieUiModel.releaseDate,
@@ -40,12 +40,12 @@ class MovieMapper {
         originalLanguage = homeMovieUiModel.originalLanguage
     )
 
-    fun toDomainList(tList: List<DetailedMovieDto>): List<MovieUiModel> =
+    private fun toDomainList(tList: List<MovieDetailDto>): List<MovieUiModel> =
         tList.map { response ->
             toDomain(response = response)
         }
 
-    fun fromDomainList(domainList: List<MovieUiModel>): List<DetailedMovieDto> =
+    fun fromDomainList(domainList: List<MovieUiModel>): List<MovieDetailDto> =
         domainList.map {
             fromDomain(it)
         }

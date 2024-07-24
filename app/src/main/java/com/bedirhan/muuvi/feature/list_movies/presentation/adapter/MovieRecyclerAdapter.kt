@@ -6,18 +6,20 @@ import androidx.recyclerview.widget.ListAdapter
 import com.bedirhan.muuvi.databinding.HomeMovieItemBinding
 import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
 
-class HomeFeedMovieRecyclerAdapter() :
-    ListAdapter<MovieUiModel, HomeMovieViewHolder>(MovieDiffCallBack()) {
+class MovieRecyclerAdapter(
+    private val onClickMovie: ((movieId: Int) -> Unit)?
+) :
+    ListAdapter<MovieUiModel, MovieViewHolder>(MovieDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            : HomeMovieViewHolder {
-        return HomeMovieViewHolder(
+            : MovieViewHolder {
+        return MovieViewHolder(
             HomeMovieItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
-            )
+            ), onClickMovie
         )
     }
 
-    override fun onBindViewHolder(holder: HomeMovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }

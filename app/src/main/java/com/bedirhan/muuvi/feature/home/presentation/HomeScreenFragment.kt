@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.feature.list_movies.presentation
+package com.bedirhan.muuvi.feature.home.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,36 +9,32 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.bedirhan.muuvi.databinding.FragmentHomeFeedBinding
-import com.bedirhan.muuvi.feature.list_movies.presentation.adapter.HomeFeedMovieRecyclerAdapter
+import androidx.navigation.fragment.findNavController
+import com.bedirhan.muuvi.databinding.FragmentHomeScreenBinding
+import com.bedirhan.muuvi.feature.list_movies.presentation.adapter.MovieRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
 @AndroidEntryPoint
-class HomeFeedFragment : Fragment() {
-    private var _binding: FragmentHomeFeedBinding? = null
+class HomeScreenFragment : Fragment() {
+    private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: HomeFeedViewModel by viewModels()
-    private val topRatedMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter()
-    }
-    private val popularMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter()
-    }
-    private val upcomingMoviesRecyclerAdapter: HomeFeedMovieRecyclerAdapter by lazy {
-        HomeFeedMovieRecyclerAdapter()
-    }
+    private val viewModel: HomeScreenViewModel by viewModels()
 
-
+    private val topRatedMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
+    }
+    private val popularMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
+    }
+    private val upcomingMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+        MovieRecyclerAdapter(::onClickMovie)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeFeedBinding.inflate(inflater, container, false)
-//        setupRecyclerViews()
-//        observeMovies()
-//        collectApiRequest()
+        _binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -58,7 +54,10 @@ class HomeFeedFragment : Fragment() {
             }
         }
     }
-
+    private fun onClickMovie(movieId: Int) {
+        val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
+        findNavController().navigate(action)
+    }
     private fun setupRecyclerViews() = binding.apply {
         rvPopularMovies.adapter = popularMoviesRecyclerAdapter
         rvTopRatedMovies.adapter = topRatedMoviesRecyclerAdapter
@@ -78,7 +77,6 @@ class HomeFeedFragment : Fragment() {
             }
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

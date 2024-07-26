@@ -10,13 +10,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.bedirhan.muuvi.common.Constants.MOVIE_IMAGE_POSTER_PATH
+import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.common.Resource
-import com.bedirhan.muuvi.common.loadImage
+import com.bedirhan.muuvi.utils.extensions.loadImage
 import com.bedirhan.muuvi.databinding.FragmentMovieDetailBinding
 import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
+import com.bedirhan.muuvi.utils.extensions.hide
+import com.bedirhan.muuvi.utils.extensions.show
+import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 class MovieDetailFragment : Fragment() {
     private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
-    private val movieDetailViewModel: MovieDetailFragmentViewModel by viewModels()
+    private val movieDetailViewModel: MovieDetailViewModel by viewModels()
     private val navigationArgs: MovieDetailFragmentArgs by navArgs()
     private fun getArgs() = navigationArgs.movieId
 
@@ -34,9 +36,16 @@ class MovieDetailFragment : Fragment() {
     ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         val view = binding.root
+        setupSwipeRefreshLayout()
         observeMovieDetail()
         movieDetailViewModel.getMovieDetail(getArgs())
         return view
+    }
+
+    private fun setupSwipeRefreshLayout() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            observeMovieDetail()
+        }
     }
 
     private fun observeMovieDetail() =
@@ -51,6 +60,7 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Success -> {
+                                binding.swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
                                 resource.data?.let { movieDetail ->
                                     bindMovieDetail(movieDetail)
@@ -58,8 +68,9 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Error -> {
+                                binding.swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
-                                showError(resource.message)
+                                binding.root.showErrorSnackbar(resource.message)
                             }
                         }
                     }
@@ -79,15 +90,10 @@ class MovieDetailFragment : Fragment() {
 
     private fun showShimmerEffect(show: Boolean) {
         binding.apply {
-            shimmerLayout.root.visibility = if (show) View.VISIBLE else View.GONE
-            scrollViewContent.visibility = if (show) View.GONE else View.VISIBLE
+            if (show) shimmerLayout.root.show() else shimmerLayout.root.hide()
+            if (show) scrollViewContent.hide() else scrollViewContent.show()
         }
     }
-
-    private fun showError(message: String?) {
-        Snackbar.make(binding.root, message ?: "An error occurred", Snackbar.LENGTH_LONG).show()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

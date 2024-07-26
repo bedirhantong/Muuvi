@@ -2,6 +2,7 @@
 <com.facebook.shimmer.ShimmerFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:shimmer_auto_start="true"
@@ -51,7 +52,7 @@
             android:layout_height="20dp"
             android:paddingStart="14dp"
             android:paddingBottom="8dp"
-            android:background="@color/colorShimmerDescriptionLabel"
+            android:background="@color/colorShimmerFooterLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivPoster"
             app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"/>
@@ -69,11 +70,43 @@
             android:id="@+id/tvRating"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:background="@color/colorShimmerDescriptionLabel"
+            android:background="@color/colorShimmerFooterLabel"
             android:paddingTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOverview"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvRating">
+
+            <View
+                android:id="@+id/movie2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorShimmerDescriptionLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvReleaseDate" />
+
+            <View
+                android:id="@+id/movie3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/colorShimmerForeground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvReleaseDate" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.facebook.shimmer.ShimmerFrameLayout>

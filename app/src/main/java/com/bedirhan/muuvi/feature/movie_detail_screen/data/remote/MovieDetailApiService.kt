@@ -1,6 +1,6 @@
 package com.bedirhan.muuvi.feature.movie_detail_screen.data.remote
 
-import com.bedirhan.muuvi.common.Constants.MOVIE_API_KEY
+import com.bedirhan.muuvi.utils.Constants.MOVIE_API_KEY
 import com.bedirhan.muuvi.feature.list_movies.data.remote.model.MovieDetailDto
 import retrofit2.Response
 import retrofit2.http.GET

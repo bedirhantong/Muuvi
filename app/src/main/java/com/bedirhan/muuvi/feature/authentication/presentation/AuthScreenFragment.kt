@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.FragmentAuthScreenBinding
-class AuthScreen : Fragment(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
+class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
 
     private var _binding: FragmentAuthScreenBinding? = null
     private val binding get() = _binding!!
@@ -38,7 +38,7 @@ class AuthScreen : Fragment(), View.OnClickListener, View.OnFocusChangeListener,
         val loginButton = binding.registerButton
         loginButton.setOnClickListener {
             val email = binding.edtEmail.text.toString()
-            val action = AuthScreenDirections.actionAuthScreenToHomeScreen(email)
+            val action = AuthScreenFragmentDirections.actionAuthScreenToHomeScreen(email)
             findNavController().navigate(action)
         }
 

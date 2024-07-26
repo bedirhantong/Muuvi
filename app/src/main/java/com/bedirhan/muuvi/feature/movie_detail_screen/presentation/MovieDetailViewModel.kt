@@ -1,6 +1,5 @@
 package com.bedirhan.muuvi.feature.movie_detail_screen.presentation
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bedirhan.muuvi.common.Resource
@@ -14,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailFragmentViewModel @Inject constructor(
+class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
     private val _movieDetail = MutableStateFlow<Resource<MovieDetailUiModel?>>(Resource.Loading())

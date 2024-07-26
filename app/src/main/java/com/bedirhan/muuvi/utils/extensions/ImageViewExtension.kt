@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.common
+package com.bedirhan.muuvi.utils.extensions
 
 import android.widget.ImageView
 import com.bedirhan.muuvi.R

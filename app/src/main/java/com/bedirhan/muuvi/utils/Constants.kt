@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.common
+package com.bedirhan.muuvi.utils
 
 import com.bedirhan.muuvi.BuildConfig
 

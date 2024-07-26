@@ -3,8 +3,8 @@ package com.bedirhan.muuvi.feature.movie_detail_screen.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bedirhan.muuvi.common.Resource
-import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
-import com.bedirhan.muuvi.feature.movie_detail_screen.domain.usecase.GetMovieDetailUseCase
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetMovieDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +16,8 @@ import javax.inject.Inject
 class MovieDetailViewModel @Inject constructor(
     private val getMovieDetailUseCase: GetMovieDetailUseCase
 ) : ViewModel() {
-    private val _movieDetail = MutableStateFlow<Resource<MovieDetailUiModel?>>(Resource.Loading())
-    val movieDetail: StateFlow<Resource<MovieDetailUiModel?>> = _movieDetail
+    private val _movieDetail = MutableStateFlow<Resource<MovieUiModel?>>(Resource.Loading())
+    val movieDetail: StateFlow<Resource<MovieUiModel?>> = _movieDetail
 
     fun getMovieDetail(movieId: Int) {
         getMovieDetailUseCase.invoke(movieId)

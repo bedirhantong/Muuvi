@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.feature.list_movies.data.remote.model
+package com.bedirhan.muuvi.feature.shared.movie.data.dto
 
 import com.google.gson.annotations.SerializedName
 

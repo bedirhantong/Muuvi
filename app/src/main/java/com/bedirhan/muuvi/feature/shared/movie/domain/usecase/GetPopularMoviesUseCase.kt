@@ -1,7 +1,7 @@
-package com.bedirhan.muuvi.feature.list_movies.domain.usecase
+package com.bedirhan.muuvi.feature.shared.movie.domain.usecase
 
-import com.bedirhan.muuvi.feature.list_movies.domain.MovieRepository
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieListUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.MovieRepository
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
 import javax.inject.Inject
 
 class GetPopularMoviesUseCase@Inject constructor(

@@ -1,9 +1,9 @@
-package com.bedirhan.muuvi.feature.list_movies.data.di
+package com.bedirhan.muuvi.feature.shared.movie.data.di
 
 import com.bedirhan.muuvi.common.mapper.movies.MovieMapper
-import com.bedirhan.muuvi.feature.list_movies.data.remote.MovieApiService
-import com.bedirhan.muuvi.feature.list_movies.data.repository.MovieRepositoryImpl
-import com.bedirhan.muuvi.feature.list_movies.domain.MovieRepository
+import com.bedirhan.muuvi.feature.shared.movie.data.remote.MovieApiService
+import com.bedirhan.muuvi.feature.shared.movie.data.repository.MovieRepositoryImpl
+import com.bedirhan.muuvi.feature.shared.movie.domain.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

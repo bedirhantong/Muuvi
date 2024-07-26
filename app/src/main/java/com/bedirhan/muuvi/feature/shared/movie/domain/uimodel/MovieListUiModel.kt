@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.feature.list_movies.domain.uimodel
+package com.bedirhan.muuvi.feature.shared.movie.domain.uimodel
 
 data class MovieListUiModel(
     val page: Int?=null,

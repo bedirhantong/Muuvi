@@ -10,11 +10,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
-import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.common.Resource
+import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.utils.extensions.loadImage
 import com.bedirhan.muuvi.databinding.FragmentMovieDetailBinding
-import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.utils.extensions.hide
 import com.bedirhan.muuvi.utils.extensions.show
 import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
@@ -78,7 +78,7 @@ class MovieDetailFragment : Fragment() {
             }
         }
 
-    private fun FragmentMovieDetailBinding.bindMovieDetail(movieDetail: MovieDetailUiModel) {
+    private fun FragmentMovieDetailBinding.bindMovieDetail(movieDetail: MovieUiModel) {
         ivBackdropDetails.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.backdropPath)
         ivPoster.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.posterPath)
         tvMovieTitle.text = movieDetail.title ?: "No Title"

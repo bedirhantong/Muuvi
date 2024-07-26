@@ -1,12 +1,13 @@
 package com.bedirhan.muuvi.common.mapper.movies
 
-import com.bedirhan.muuvi.feature.list_movies.data.remote.model.MovieDetailDto
-import com.bedirhan.muuvi.feature.list_movies.data.remote.model.MoviesDto
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieListUiModel
+import com.bedirhan.muuvi.feature.shared.movie.data.dto.MovieDetailDto
+import com.bedirhan.muuvi.feature.shared.movie.data.dto.MoviesDto
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
+
 
 class MovieMapper {
-    fun toDomain(response: MovieDetailDto): MovieUiModel = MovieUiModel(
+    fun movieToDomain(response: MovieDetailDto): MovieUiModel = MovieUiModel(
         title = response.title,
         id = response.id,
         originalLanguage = response.originalLanguage,
@@ -23,7 +24,7 @@ class MovieMapper {
         overview = response.overview
     )
 
-    fun fromDomain(homeMovieUiModel: MovieUiModel): MovieDetailDto = MovieDetailDto(
+    fun movieFromDomain(homeMovieUiModel: MovieUiModel): MovieDetailDto = MovieDetailDto(
         originalTitle = homeMovieUiModel.originalTitle,
         posterPath = homeMovieUiModel.posterPath,
         releaseDate = homeMovieUiModel.releaseDate,
@@ -42,20 +43,20 @@ class MovieMapper {
 
     private fun toDomainList(tList: List<MovieDetailDto>): List<MovieUiModel> =
         tList.map { response ->
-            toDomain(response = response)
+            movieToDomain(response = response)
         }
 
     fun fromDomainList(domainList: List<MovieUiModel>): List<MovieDetailDto> =
         domainList.map {
-            fromDomain(it)
+            movieFromDomain(it)
         }
 
     // toDomainList
-    fun toDomain(response: MoviesDto): MovieListUiModel? =
+    fun movieToDomain(response: MoviesDto): MovieListUiModel? =
         response.results?.let { toDomainList(it) }?.let {
-            response.totalPages?.let {it1->
-                response.totalResults?.let {it2->
-                    response.page?.let {it3->
+            response.totalPages?.let { it1 ->
+                response.totalResults?.let { it2 ->
+                    response.page?.let { it3 ->
                         MovieListUiModel(
                             results = it,
                             page = it3,

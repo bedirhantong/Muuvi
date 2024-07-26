@@ -1,6 +1,6 @@
-package com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel
+package com.bedirhan.muuvi.feature.shared.movie.domain.uimodel
 
-data class MovieDetailUiModel(
+data class MovieUiModel(
     val adult: Boolean?=null,
     val backdropPath: String?=null,
     val genreIds: List<Int?>?=null,

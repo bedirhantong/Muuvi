@@ -1,8 +1,8 @@
-package com.bedirhan.muuvi.feature.movie_detail_screen.domain.usecase
+package com.bedirhan.muuvi.feature.shared.movie.domain.usecase
 
 import com.bedirhan.muuvi.common.Resource
-import com.bedirhan.muuvi.feature.movie_detail_screen.domain.MovieDetailRepository
-import com.bedirhan.muuvi.feature.movie_detail_screen.domain.uimodel.MovieDetailUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.MovieRepository
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -10,9 +10,9 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class GetMovieDetailUseCase @Inject constructor(
-    private val movieDetailRepository: MovieDetailRepository
+    private val movieDetailRepository: MovieRepository
 ) {
-    operator fun invoke(movieId: Int): Flow<Resource<MovieDetailUiModel?>> = flow {
+    operator fun invoke(movieId: Int): Flow<Resource<MovieUiModel?>> = flow {
         try {
             emit(Resource.Loading())
             val movieDetail = movieDetailRepository.getMovieDetailById(movieId)

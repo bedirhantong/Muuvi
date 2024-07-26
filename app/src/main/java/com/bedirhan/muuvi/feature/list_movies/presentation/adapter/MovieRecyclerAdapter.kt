@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.bedirhan.muuvi.databinding.HomeMovieItemBinding
-import com.bedirhan.muuvi.feature.list_movies.domain.uimodel.MovieUiModel
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 
 class MovieRecyclerAdapter(
     private val onClickMovie: ((movieId: Int) -> Unit)?

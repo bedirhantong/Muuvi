@@ -8,8 +8,8 @@
     <color name="colorAccent">#E39D36</color>
     <color name="showAllTextColor">#000000</color>
 
-    <color name="colorShimmerBackground">#979797</color>
-    <color name="colorShimmerForeground">#717171</color>
+    <color name="colorShimmerBackground">#756B67</color>
+    <color name="colorShimmerForeground">#1E2C3F</color>
     <color name="colorShimmerDescriptionLabel">#9099A8</color>
     <color name="colorShimmerHeaderLabel">#686D75</color>
     <color name="colorShimmerFooterLabel">#545557</color>

@@ -60,7 +60,7 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Success -> {
-                                binding.swipeRefreshLayout.isRefreshing = false
+                                swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
                                 resource.data?.let { movieDetail ->
                                     bindMovieDetail(movieDetail)
@@ -68,9 +68,9 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Error -> {
-                                binding.swipeRefreshLayout.isRefreshing = false
+                                swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
-                                binding.root.showErrorSnackbar(resource.message)
+                                root.showErrorSnackbar(resource.message)
                             }
                         }
                     }

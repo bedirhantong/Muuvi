@@ -8,4 +8,5 @@ interface MovieRepository {
     suspend fun getUpcomingMovies(): MovieListUiModel?
     suspend fun getPopularMovies(): MovieListUiModel?
     suspend fun getMovieDetailById(movieId:Int) : MovieUiModel?
+    suspend fun searchMovieByQuery(movieQuery:String) : MovieListUiModel?
 }

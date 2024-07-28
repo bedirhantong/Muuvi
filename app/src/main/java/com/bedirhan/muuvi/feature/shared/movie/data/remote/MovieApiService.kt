@@ -33,10 +33,20 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MovieDetailDto>
 
+    @GET(MOVIE_QUERY)
+    suspend fun getMoviesByQuery(
+        @Query("query") query: String,
+        @Query("include_adult") includeAdult: Boolean = false,
+        @Query("language") language: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") apiKey: String = MOVIE_API_KEY
+    ): Response<MoviesDto>
+
     companion object {
         const val TOP_RATED = "movie/top_rated"
         const val UPCOMING = "movie/upcoming"
         const val POPULAR = "movie/popular"
         const val MOVIE_DETAIL = "movie/{id}"
+        const val MOVIE_QUERY = "search/movie"
     }
 }

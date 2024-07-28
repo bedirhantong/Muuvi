@@ -24,7 +24,7 @@
 
             <ImageView
                 android:id="@+id/imageViewMovie"
-                android:layout_width="180dp"
+                android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 tools:src="@drawable/placeholder_centered" />
@@ -33,9 +33,10 @@
                 android:id="@+id/textViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:maxLines="2"
                 android:textAlignment="center"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="Movie Title" />

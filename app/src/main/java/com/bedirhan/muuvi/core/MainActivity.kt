@@ -71,9 +71,11 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.authScreen) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                 toggle.isDrawerIndicatorEnabled = false
+                supportActionBar?.hide()
             } else {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
                 toggle.isDrawerIndicatorEnabled = true
+                supportActionBar?.show()
             }
             toggle.syncState()
         }

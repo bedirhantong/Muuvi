@@ -35,7 +35,7 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
         binding.edtEmail.onFocusChangeListener = this
         binding.edtPassword.onFocusChangeListener = this
 
-        val loginButton = binding.registerButton
+        val loginButton = binding.loginButton
         loginButton.setOnClickListener {
             val action = AuthScreenFragmentDirections.actionAuthScreenToHomeScreenFragment()
             findNavController().navigate(action)
@@ -58,17 +58,17 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
     }
 
     private fun updateButtonState() {
-        binding.registerButton.isEnabled = viewModel.isLoginButtonEnabled()
-        binding.registerButton.backgroundTintList =
-            ColorStateList.valueOf(if (binding.registerButton.isEnabled) Color.DKGRAY else Color.LTGRAY)
+        binding.loginButton.isEnabled = viewModel.isLoginButtonEnabled()
+        binding.loginButton.backgroundTintList =
+            ColorStateList.valueOf(if (binding.loginButton.isEnabled) Color.DKGRAY else Color.LTGRAY)
 
         if (viewModel.isEmailValid() && viewModel.isPasswordValid()) {
-            binding.registerButton.isEnabled = true
-            binding.registerButton.backgroundTintList =
-                ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+            binding.loginButton.isEnabled = true
+            binding.loginButton.backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#1E2C3F"))
         } else {
-            binding.registerButton.isEnabled = false
-            binding.registerButton.backgroundTintList = ColorStateList.valueOf(Color.LTGRAY)
+            binding.loginButton.isEnabled = false
+            binding.loginButton.backgroundTintList = ColorStateList.valueOf(Color.LTGRAY)
         }
     }
 

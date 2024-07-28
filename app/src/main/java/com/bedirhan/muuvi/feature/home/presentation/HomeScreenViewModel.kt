@@ -1,6 +1,5 @@
 package com.bedirhan.muuvi.feature.home.presentation
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +7,7 @@ import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetPopularMoviesUseCase
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetTopRatedMoviesUseCase
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetUpcomingMoviesUseCase
+import com.bedirhan.muuvi.utils.extensions.logE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,7 +42,7 @@ class HomeScreenViewModel @Inject constructor(
                 }
 
             } catch (e: Exception) {
-                Log.d("get", e.message.toString())
+                logE("get", e.message.toString())
             }
         }
     }
@@ -55,7 +55,7 @@ class HomeScreenViewModel @Inject constructor(
                     _popularMoviesLiveData.postValue(movies.results)
                 }
             } catch (e: Exception) {
-                Log.d("get", e.message.toString())
+                logE("get", e.message.toString())
             }
         }
     }
@@ -68,7 +68,7 @@ class HomeScreenViewModel @Inject constructor(
                     _upcomingMoviesLiveData.postValue(movies.results)
                 }
             } catch (e: Exception) {
-                Log.d("get", e.message.toString())
+                logE("get", e.message.toString())
             }
         }
     }

@@ -19,10 +19,10 @@ class SimilarMoviesViewModel @Inject constructor(
     private val _movieList = MutableStateFlow<Resource<MovieListUiModel?>>(Resource.Loading())
     val movieList: StateFlow<Resource<MovieListUiModel?>> = _movieList
 
-    fun getSimilarMovies(movieId:Int){
+    fun getSimilarMovies(movieId: Int) {
         getSimilarMoviesUseCase.invoke(movieId)
             .onEach { resource ->
-                when(resource){
+                when (resource) {
                     is Resource.Loading -> {
                         _movieList.value = Resource.Loading()
                     }

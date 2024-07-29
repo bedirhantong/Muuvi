@@ -67,8 +67,8 @@ class HomeScreenFragment : Fragment() {
 
     private fun navigateToListMoviesFragment(movieList: MovieListUiModel?, category: String) {
         val action = movieList?.let {
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToListMoviesFragment(
-                movieList = it
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToSimilarMoviesFragment(
+                234
             )
         }
         if (action != null) {

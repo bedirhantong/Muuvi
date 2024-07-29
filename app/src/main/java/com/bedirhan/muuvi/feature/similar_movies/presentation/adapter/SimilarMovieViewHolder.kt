@@ -1,7 +1,6 @@
 package com.bedirhan.muuvi.feature.similar_movies.presentation.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import com.bedirhan.muuvi.databinding.FragmentSimilarMoviesBinding
 import com.bedirhan.muuvi.databinding.SimilarMovieItemBinding
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.utils.Constants

@@ -7,16 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature.similar_movies.presentation.SimilarMoviesFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:textColor="@color/black"
-        android:text="Merhaba"
-        android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSimilarMoviesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:layoutAnimation="@anim/anim"
         android:layout_marginTop="16dp"
         android:scrollbars="vertical"

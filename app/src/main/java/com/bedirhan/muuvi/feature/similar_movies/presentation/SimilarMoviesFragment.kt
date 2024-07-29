@@ -1,6 +1,7 @@
 package com.bedirhan.muuvi.feature.similar_movies.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,9 +11,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentSimilarMoviesBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
+import com.bedirhan.muuvi.feature.movie_detail_screen.presentation.MovieDetailFragmentArgs
 import com.bedirhan.muuvi.feature.similar_movies.presentation.adapter.SimilarMoviesAdapter
 import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,12 +23,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SimilarMoviesFragment(private val movieId: Int) : Fragment() {
+class SimilarMoviesFragment(): Fragment() {
     private var _binding: FragmentSimilarMoviesBinding? = null
     private val binding get() = _binding!!
-
     private val viewModel: SimilarMoviesViewModel by viewModels()
-    private val similarViewModelAdapter : SimilarMoviesAdapter by lazy {
+    private val similarViewModelAdapter: SimilarMoviesAdapter by lazy {
         SimilarMoviesAdapter(::onClickMovie)
     }
 
@@ -36,9 +38,12 @@ class SimilarMoviesFragment(private val movieId: Int) : Fragment() {
         _binding = FragmentSimilarMoviesBinding.inflate(inflater, container, false)
         val view = binding.root
         setupRecyclerView()
-        observeSimilarMovies(movieId)
+        observeSimilarMovies(
+
+        )
         return view
     }
+
     private fun observeSimilarMovies(movieId: Int) = binding.apply {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -46,21 +51,15 @@ class SimilarMoviesFragment(private val movieId: Int) : Fragment() {
                 viewModel.movieList.collectLatest { resource ->
                     when (resource) {
                         is Resource.Loading -> {
-//                            showShimmerEffect(true)
+                            // showShimmerEffect(true)
                         }
-
                         is Resource.Success -> {
-//                            swipeRefreshLayout.isRefreshing = false
-//                            showShimmerEffect(false)
                             resource.data?.let { movieListUiModel ->
                                 val movies = movieListUiModel.results?.filterNotNull() ?: emptyList()
                                 similarViewModelAdapter.submitList(movies)
                             }
                         }
-
                         is Resource.Error -> {
-//                            swipeRefreshLayout.isRefreshing = false
-//                            showShimmerEffect(false)
                             root.showErrorSnackbar(resource.message)
                         }
                     }
@@ -69,13 +68,17 @@ class SimilarMoviesFragment(private val movieId: Int) : Fragment() {
         }
     }
 
+
     private fun setupRecyclerView() = binding.apply {
         rvSimilarMoviesRecyclerView.adapter = similarViewModelAdapter
     }
+
     private fun onClickMovie(movieId: Int) {
-        val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
+        val action =
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
         findNavController().navigate(action)
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

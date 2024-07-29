@@ -17,9 +17,9 @@ class ViewPagerAdapter (
                 return MovieCastFragment()
             }
             1 -> {
-                return SimilarMoviesFragment(movieId)
+                return SimilarMoviesFragment()
             }
         }
-        return SimilarMoviesFragment(movieId)
+        return SimilarMoviesFragment()
     }
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,86 +11,86 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="2dp"
-        android:contentDescription="movie_poster"
+        android:contentDescription="@string/movie_detail_tools_title"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="2:3"
         app:layout_constraintEnd_toStartOf="@+id/containerText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:src="@drawable/movie_cover" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerText"
         android:layout_width="0dp"
-        android:background="@drawable/movie_bg"
         android:layout_height="0dp"
+        android:background="@drawable/movie_bg"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivPosterImage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="8dp">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Movie Title" />
+            tools:text="@string/movie_detail_tools_title" />
 
         <TextView
             android:id="@+id/tvReleaseDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
             android:textColor="@android:color/darker_gray"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            tools:text="Release Date: 2024-01-01" />
+            tools:text="@string/movie_list_tools_release_date" />
 
         <TextView
             android:id="@+id/tvOverview"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:ellipsize="end"
             android:maxLines="4"
             android:textColor="@color/white"
-            android:ellipsize="end"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvReleaseDate"
             app:layout_constraintBottom_toTopOf="@id/tvPopularity"
-            tools:text="Movie overview goes here. It provides a brief description of the movie plot." />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvReleaseDate"
+            tools:text="@string/movie_list_tools_overview" />
 
         <TextView
             android:id="@+id/tvPopularity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/movies"
             android:drawablePadding="4dp"
             android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/movies"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="8.5" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/movie_list_tools_rating" />
 
         <TextView
             android:id="@+id/tvVoteCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:drawableLeft="@drawable/vote"
             android:drawablePadding="4dp"
             android:textColor="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="14sp"
+            app:drawableLeftCompat="@drawable/vote"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="1234 votes" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="@string/movie_list_tools_vote" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

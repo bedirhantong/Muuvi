@@ -50,6 +50,10 @@ class SearchMoviesFragment : Fragment() {
     private fun setupRecyclerView() = binding.apply {
         rvSearchedMoviesRecyclerView.adapter = searchMoviesAdapter
     }
+
+    /*
+     1 metod tek bir iş yapmalı
+     */
     private fun observeMovies() = binding.apply {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

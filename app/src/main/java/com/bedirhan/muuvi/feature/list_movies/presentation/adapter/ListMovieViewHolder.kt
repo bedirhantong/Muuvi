@@ -12,6 +12,7 @@ class ListMovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: MovieUiModel) = binding.apply {
         itemView.setOnClickListener {
+            // it i değiştir
             movie.id?.let { it1 ->
                 onClickMovie?.invoke(it1)
             }

@@ -15,22 +15,24 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchMoviesViewModel @Inject constructor(
     private val getMovieSearchUseCase: GetMovieSearchUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _movieList = MutableStateFlow<Resource<MovieListUiModel?>>(Resource.Loading())
     val movieList: StateFlow<Resource<MovieListUiModel?>> = _movieList
 
-    fun getMovieBySearch(query:String){
+    fun getMovieBySearch(query: String) {
         getMovieSearchUseCase.invoke(query)
             .onEach { resource ->
-                when(resource){
+                when (resource) {
                     is Resource.Loading -> {
                         _movieList.value = Resource.Loading()
                     }
+
                     is Resource.Success -> {
-                        resource.data?.let {
-                            _movieList.value = Resource.Success(resource.data)
+                        resource.data?.let { movieList ->
+                            _movieList.value = Resource.Success(movieList)
                         }
                     }
+
                     is Resource.Error -> {
                         _movieList.value = Resource.Error(resource.message)
                     }

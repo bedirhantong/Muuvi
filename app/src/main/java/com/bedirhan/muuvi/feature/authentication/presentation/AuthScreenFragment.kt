@@ -11,7 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.FragmentAuthScreenBinding
-class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeListener, View.OnKeyListener {
+
+class AuthScreenFragment : Fragment() {
 
     private var _binding: FragmentAuthScreenBinding? = null
     private val binding get() = _binding!!
@@ -29,14 +30,38 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.edtEmail.setText(viewModel.email)
-        binding.edtPassword.setText(viewModel.password)
+        binding.apply {
+            edtEmail.setText(viewModel.email)
+            edtPassword.setText(viewModel.password)
+        }
 
-        binding.edtEmail.onFocusChangeListener = this
-        binding.edtPassword.onFocusChangeListener = this
+        binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (binding.tilEmail.isErrorEnabled) {
+                    binding.tilEmail.isErrorEnabled = false
+                }
+            }
+        }
 
-        val loginButton = binding.loginButton
-        loginButton.setOnClickListener {
+        binding.edtPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                if (binding.tilPassword.isErrorEnabled) {
+                    binding.tilPassword.isErrorEnabled = false
+                }
+            } else {
+                if (isPasswordValid()) {
+                    if (binding.tilEmail.isErrorEnabled) {
+                        binding.tilEmail.isErrorEnabled = false
+                    }
+                    binding.tilPassword.apply {
+                        setStartIconDrawable(R.drawable.check_circle)
+                        setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
+                    }
+                }
+            }
+        }
+
+        binding.loginButton.setOnClickListener {
             val action = AuthScreenFragmentDirections.actionAuthScreenToHomeScreenFragment()
             findNavController().navigate(action)
         }
@@ -65,6 +90,7 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
         if (viewModel.isEmailValid() && viewModel.isPasswordValid()) {
             binding.loginButton.isEnabled = true
             binding.loginButton.backgroundTintList =
+                    // color taşı
                 ColorStateList.valueOf(Color.parseColor("#1E2C3F"))
         } else {
             binding.loginButton.isEnabled = false
@@ -72,13 +98,13 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
         }
     }
 
-    private fun validatePassword(): Boolean {
+    private fun isPasswordValid(): Boolean {
         var errorMessage: String? = null
         val passwordText: String = binding.edtPassword.text.toString()
         if (passwordText.isEmpty()) {
-            errorMessage = "Password is required"
+            errorMessage = getString(R.string.password_required)
         } else if (passwordText.length < 8 || !passwordText.any { it.isUpperCase() } || !passwordText.any { !it.isLetterOrDigit() }) {
-            errorMessage = "Password must be at least 8 characters, contain a special character, and a capital letter"
+            errorMessage = getString(R.string.password_detail)
         }
         if (errorMessage != null) {
             binding.tilPassword.apply {
@@ -87,43 +113,6 @@ class AuthScreenFragment : Fragment(), View.OnClickListener, View.OnFocusChangeL
             }
         }
         return errorMessage == null
-    }
-
-    override fun onClick(view: View?) {}
-
-    override fun onFocusChange(view: View?, hasFocus: Boolean) {
-        if (view != null) {
-            when (view.id) {
-                R.id.edtEmail -> {
-                    if (hasFocus) {
-                        if (binding.tilEmail.isErrorEnabled) {
-                            binding.tilEmail.isErrorEnabled = false
-                        }
-                    }
-                }
-                R.id.edtPassword -> {
-                    if (hasFocus) {
-                        if (binding.tilPassword.isErrorEnabled) {
-                            binding.tilPassword.isErrorEnabled = false
-                        }
-                    } else {
-                        if (validatePassword()) {
-                            if (binding.tilEmail.isErrorEnabled) {
-                                binding.tilEmail.isErrorEnabled = false
-                            }
-                            binding.tilPassword.apply {
-                                setStartIconDrawable(R.drawable.check_circle)
-                                setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    override fun onKey(view: View?, event: Int, keyEvent: KeyEvent?): Boolean {
-        return false
     }
 
     override fun onDestroyView() {

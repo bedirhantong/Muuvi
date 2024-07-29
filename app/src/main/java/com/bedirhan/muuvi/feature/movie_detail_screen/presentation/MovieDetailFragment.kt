@@ -16,7 +16,7 @@ import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.utils.extensions.loadImage
 import com.bedirhan.muuvi.databinding.FragmentMovieDetailBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
-import com.bedirhan.muuvi.feature.movie_detail_screen.presentation.viewpager_adapter.ViewPagerAdapter
+import com.bedirhan.muuvi.feature.movie_detail_screen.presentation.viewpager_adapter.HomeMoreFeedViewPagerAdapter
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.similar_movies.presentation.adapter.SimilarMoviesAdapter
 import com.bedirhan.muuvi.utils.extensions.hide
@@ -37,18 +37,18 @@ class MovieDetailFragment : Fragment() {
     private val similarViewModelAdapter: SimilarMoviesAdapter by lazy {
         SimilarMoviesAdapter(::onClickMovie)
     }
+    /*
+    tek bir ui state içine topla onu da state flowa alıp her birini tek bir yerden collect etsen
+    - bütün stateleri tek bir yerden yöneteceksin
+
+     */
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
-        val view = binding.root
-        setupSwipeRefreshLayout()
-        observeMovieDetail()
-        observeMovies(getArgs())
-        viewModel.getMovieDetail(getArgs())
-        return view
+        return binding.root
     }
 
     private fun observeMovies(movieId: Int) = lifecycleScope.launch {
@@ -68,13 +68,18 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
+        setupSwipeRefreshLayout()
+        observeMovieDetail()
+        observeMovies(getArgs())
+
+        viewModel.getMovieDetail(getArgs())
     }
 
     private fun setupViewPager() = binding.apply {
-        binding.viewPager.adapter =
-            ViewPagerAdapter(fragmentActivity = requireActivity(), movieId = getArgs())
+        binding.movieDetailMoreFeedViewPager.adapter =
+            HomeMoreFeedViewPagerAdapter(fragmentActivity = requireActivity(), movieId = getArgs())
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.movieDetailMoreFeedViewPager) { tab, position ->
             when (position) {
                 0 -> {
                     tab.text = "Cast"
@@ -94,9 +99,7 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun onClickMovie(movieId: Int) {
-        val action =
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
-        findNavController().navigate(action)
+        findNavController().navigate(HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId))
     }
 
     private fun setupSwipeRefreshLayout() {
@@ -104,12 +107,12 @@ class MovieDetailFragment : Fragment() {
             observeMovieDetail()
         }
     }
+    // observe movie detail 1 iş yapmadı flowların amacı vs. veri değiştiyse haber vermektri
 
     private fun observeMovieDetail() =
         binding.apply {
             lifecycleScope.launch {
                 repeatOnLifecycle(Lifecycle.State.STARTED) {
-                    viewModel.getMovieDetail(getArgs())
                     viewModel.movieDetail.collectLatest { resource ->
                         when (resource) {
                             is Resource.Loading -> {

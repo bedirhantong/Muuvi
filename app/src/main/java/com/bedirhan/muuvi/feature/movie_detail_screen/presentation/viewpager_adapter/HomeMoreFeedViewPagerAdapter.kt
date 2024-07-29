@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bedirhan.muuvi.feature.casting.MovieCastFragment
 import com.bedirhan.muuvi.feature.similar_movies.presentation.SimilarMoviesFragment
 
-class ViewPagerAdapter (
+class HomeMoreFeedViewPagerAdapter (
     fragmentActivity: FragmentActivity,
     private val movieId: Int
 ) : FragmentStateAdapter(fragmentActivity) {
@@ -17,9 +17,9 @@ class ViewPagerAdapter (
                 return MovieCastFragment()
             }
             1 -> {
-                return SimilarMoviesFragment()
+                return SimilarMoviesFragment(movieId)
             }
         }
-        return SimilarMoviesFragment()
+        return SimilarMoviesFragment(movieId)
     }
 }

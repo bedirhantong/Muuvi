@@ -23,7 +23,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SimilarMoviesFragment(): Fragment() {
+class SimilarMoviesFragment(
+    private val movieId: Int // Store the movieId as a property
+): Fragment() {
     private var _binding: FragmentSimilarMoviesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SimilarMoviesViewModel by viewModels()
@@ -39,7 +41,7 @@ class SimilarMoviesFragment(): Fragment() {
         val view = binding.root
         setupRecyclerView()
         observeSimilarMovies(
-
+            movieId = movieId
         )
         return view
     }

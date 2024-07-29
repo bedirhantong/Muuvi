@@ -11,7 +11,10 @@ class SearchMovieViewHolder (
     private val onClickMovie: ((movieId: Int) -> Unit)?
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(movie: MovieUiModel) = binding.apply {
-        itemView.setOnClickListener {
+//        itemView.setOnClickListener {
+//
+//        }
+        root.setOnClickListener{
             movie.id?.let { it1 ->
                 onClickMovie?.invoke(it1)
             }

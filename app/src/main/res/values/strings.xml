@@ -10,7 +10,7 @@
     <!-- Auth Strings -->
     <string name="password_required">Password is required</string>
     <string name="password_detail">Password must be at least 8 characters, contain a special character, and a capital letter</string>
-    <string name="auth_header">Welcome Back!</string>
+    <string name="auth_header">Muuvi.</string>
     <string name="auth_description">Please login to your account</string>
     <string name="email_hint">Email Address</string>
     <string name="password_hint">Password</string>
@@ -32,6 +32,8 @@
     <string name="movie_detail_tools_rating">Rating: 8.5/10</string>
     <string name="movie_detail_error">Failed to load movie details.</string>
     <string name="movie_detail_retry">Retry</string>
+    <string name="movie_detail_no_title">No Title</string>
+    <string name="movie_detail_no_overview">No Overview</string>
 
     <!-- Search Strings -->
     <string name="search_screen_title">You can Search for a Movies</string>
@@ -48,5 +50,8 @@
     <string name="extension_snackbar_success">Success</string>
     <string name="extension_snackbar_info">Information</string>
 
+    <!-- Viewpager & Tab Layout Strings -->
+    <string name="cast">Cast</string>
+    <string name="similar_movies">Similar Movies</string>
 
 </resources>

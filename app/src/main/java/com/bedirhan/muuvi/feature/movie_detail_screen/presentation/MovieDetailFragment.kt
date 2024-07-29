@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH
 import com.bedirhan.muuvi.utils.extensions.loadImage
@@ -79,27 +80,28 @@ class MovieDetailFragment : Fragment() {
         binding.movieDetailMoreFeedViewPager.adapter =
             HomeMoreFeedViewPagerAdapter(fragmentActivity = requireActivity(), movieId = getArgs())
 
-        TabLayoutMediator(binding.tabLayout, binding.movieDetailMoreFeedViewPager) { tab, position ->
+        TabLayoutMediator(
+            binding.tabLayout,
+            binding.movieDetailMoreFeedViewPager
+        ) { tab, position ->
             when (position) {
                 0 -> {
-                    tab.text = "Cast"
+                    tab.text = getString(R.string.cast)
                 }
 
                 1 -> {
-                    tab.text = "Similar Movies"
+                    tab.text = getString(R.string.similar_movies)
                 }
-//                2 -> {
-//                    tab.text = getString(R.string.recommended)
-//                }
-//                3 -> {
-//                    tab.text = getString(R.string.movie_cast)
-//                }
             }
         }.attach()
     }
 
     private fun onClickMovie(movieId: Int) {
-        findNavController().navigate(HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId))
+        findNavController().navigate(
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(
+                movieId
+            )
+        )
     }
 
     private fun setupSwipeRefreshLayout() {
@@ -137,14 +139,15 @@ class MovieDetailFragment : Fragment() {
                 }
             }
         }
+
     private fun setupUI(movieDetail: MovieUiModel?) = binding.apply {
         movieDetail?.let {
             ivBackdropDetails.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.backdropPath)
             ivPoster.loadImage(MOVIE_IMAGE_POSTER_PATH + movieDetail.posterPath)
-            tvMovieTitle.text = movieDetail.title ?: "No Title"
+            tvMovieTitle.text = movieDetail.title ?: getString(R.string.movie_detail_no_title)
             tvReleaseDate.text =
                 "Release Date: ${movieDetail.releaseDate ?: "N/A"}"
-            tvOverview.text = movieDetail.overview ?: "No Overview"
+            tvOverview.text = movieDetail.overview ?: getString(R.string.movie_detail_no_overview)
             tvRating.text = "Rating: ${movieDetail.voteAverage ?: "N/A"}/10"
         }
     }

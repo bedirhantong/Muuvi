@@ -7,6 +7,8 @@
     <color name="colorSecondary">#E86A33</color>
     <color name="colorPrimaryDark">#E86A33</color>
     <color name="colorAccent">#E39D36</color>
+    <color name="button_enabled">#4CAF50</color>
+    <color name="button_disabled">#9099A8</color>
     <color name="showAllTextColor">#000000</color>
 
     <color name="colorShimmerBackground">#756B67</color>

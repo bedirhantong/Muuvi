@@ -1,11 +1,13 @@
 package com.bedirhan.muuvi.feature.authentication.presentation
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -79,10 +81,12 @@ class AuthScreenFragment : Fragment() {
             viewModel.password = binding.edtPassword.text.toString()
             updateButtonState()
         }
+
         override fun afterTextChanged(s: Editable?) {}
     }
 
     private fun updateButtonState() {
+        val context: Context = requireContext()
         binding.loginButton.isEnabled = viewModel.isLoginButtonEnabled()
         binding.loginButton.backgroundTintList =
             ColorStateList.valueOf(if (binding.loginButton.isEnabled) Color.DKGRAY else Color.LTGRAY)
@@ -90,11 +94,11 @@ class AuthScreenFragment : Fragment() {
         if (viewModel.isEmailValid() && viewModel.isPasswordValid()) {
             binding.loginButton.isEnabled = true
             binding.loginButton.backgroundTintList =
-                    // color taşı
-                ColorStateList.valueOf(Color.parseColor("#1E2C3F"))
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_enabled))
         } else {
             binding.loginButton.isEnabled = false
-            binding.loginButton.backgroundTintList = ColorStateList.valueOf(Color.LTGRAY)
+            binding.loginButton.backgroundTintList =
+                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_disabled))
         }
     }
 

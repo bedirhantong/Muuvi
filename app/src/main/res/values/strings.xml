@@ -43,4 +43,10 @@
     <string name="movie_list_tools_rating">8.5/10</string>
     <string name="movie_list_tools_vote">1234 votes</string>
 
+    <!-- Utility Strings -->
+    <string name="extension_snackbar_error">An error occurred</string>
+    <string name="extension_snackbar_success">Success</string>
+    <string name="extension_snackbar_info">Information</string>
+
+
 </resources>

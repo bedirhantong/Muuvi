@@ -19,6 +19,7 @@ import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
 @AndroidEntryPoint
 class SearchMoviesFragment : Fragment() {
 

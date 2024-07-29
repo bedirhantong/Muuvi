@@ -34,6 +34,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
                     style="@style/SeeAllText"
                     android:textStyle="bold"
                     android:text="Popular" />
@@ -50,6 +51,7 @@
                         android:layout_height="wrap_content"
                         style="@style/SeeAllText"
                         android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:text="See all" />
 
                     <ImageView
@@ -91,6 +93,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/colorPrimary"
                     style="@style/SeeAllText"
                     android:textStyle="bold"
                     android:text="Upcoming" />
@@ -105,6 +108,7 @@
                         android:id="@+id/tvShowUpcomingMovies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/colorPrimaryDark"
                         style="@style/SeeAllText"
                         android:textStyle="bold"
                         android:text="See all" />
@@ -149,6 +153,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     style="@style/SeeAllText"
+                    android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:text="Trending" />
 
@@ -164,6 +169,7 @@
                         android:layout_height="wrap_content"
                         style="@style/SeeAllText"
                         android:textStyle="bold"
+                        android:textColor="@color/colorPrimaryDark"
                         android:text="See all" />
 
                     <ImageView

@@ -35,11 +35,23 @@ class MovieRepositoryImpl  @Inject constructor(
     }
     override suspend fun searchMovieByQuery(movieQuery: String): MovieListUiModel? {
         val response = apiService.getMoviesByQuery(movieQuery)
-        Log.e("MovieRepositoryImpl", "${response.code()}")
+        logE("MovieRepositoryImpl", "${response.code()}")
         if (response.isSuccessful) {
             return response.body()?.let { movieMapper.movieToDomain(it) }
         } else {
-            Log.e("MovieRepositoryImpl", "Error: ${response.errorBody()?.string()}")
+            logE("MovieRepositoryImpl", "Error: ${response.errorBody()?.string()}")
+        }
+        return null
+    }
+
+    override suspend fun getSimilarMovies(movieId: Int): MovieListUiModel? {
+        val response = apiService.getSimilarMovies(movieId)
+        Log.d("MovieRepositoryImpl", "${response.code()}")
+        if (response.isSuccessful) {
+            Log.d("MovieRepositoryImpl", "${response.body()}")
+            return response.body()?.let { movieMapper.movieToDomain(it) }
+        } else {
+            Log.d("MovieRepositoryImpl", "Error: ${response.errorBody()?.string()}")
         }
         return null
     }

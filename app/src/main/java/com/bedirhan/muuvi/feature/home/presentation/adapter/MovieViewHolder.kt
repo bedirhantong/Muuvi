@@ -1,4 +1,4 @@
-package com.bedirhan.muuvi.feature.list_movies.presentation.adapter
+package com.bedirhan.muuvi.feature.home.presentation.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bedirhan.muuvi.utils.Constants.MOVIE_IMAGE_POSTER_PATH

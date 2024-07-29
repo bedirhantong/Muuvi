@@ -1,5 +1,9 @@
 package com.bedirhan.muuvi.feature.shared.movie.domain.uimodel
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class MovieUiModel(
     val adult: Boolean?=null,
     val backdropPath: String?=null,
@@ -15,4 +19,4 @@ data class MovieUiModel(
     val video: Boolean?=null,
     val voteAverage: Double?=null,
     val voteCount: Int?=null
-)
+): Parcelable

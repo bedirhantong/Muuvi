@@ -1,25 +1,25 @@
-package com.bedirhan.muuvi.feature.list_movies.presentation.adapter
+package com.bedirhan.muuvi.feature.similar_movies.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
-import com.bedirhan.muuvi.databinding.HomeMovieItemBinding
+import com.bedirhan.muuvi.databinding.SimilarMovieItemBinding
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 
-class MovieRecyclerAdapter(
+class SimilarMoviesAdapter (
     private val onClickMovie: ((movieId: Int) -> Unit)?
 ) :
-    ListAdapter<MovieUiModel, MovieViewHolder>(MovieDiffCallBack()) {
+    ListAdapter<MovieUiModel, SimilarMovieViewHolder>(SimilarMovieDiffCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-            : MovieViewHolder {
-        return MovieViewHolder(
-            HomeMovieItemBinding.inflate(
+            : SimilarMovieViewHolder {
+        return SimilarMovieViewHolder(
+            SimilarMovieItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ), onClickMovie
         )
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SimilarMovieViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }

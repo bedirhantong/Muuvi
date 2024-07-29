@@ -1,9 +1,9 @@
-package com.bedirhan.muuvi.feature.list_movies.presentation.adapter
+package com.bedirhan.muuvi.feature.similar_movies.presentation.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 
-class MovieDiffCallBack : DiffUtil.ItemCallback<MovieUiModel>() {
+class SimilarMovieDiffCallBack : DiffUtil.ItemCallback<MovieUiModel>() {
     override fun areItemsTheSame(oldItem: MovieUiModel, newItem: MovieUiModel): Boolean {
         return oldItem.id == newItem.id
     }

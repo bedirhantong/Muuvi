@@ -27,12 +27,18 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MoviesDto>
 
+
+    // "https://api.themoviedb.org/3/movie/324234?language=en-US"
+    // MOVIE_DETAIL = "movie/{id}"
     @GET(MOVIE_DETAIL)
     suspend fun getMovieDetail(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MovieDetailDto>
 
+
+    // "https://api.themoviedb.org/3/search/movie?query=asdas"
+    // MOVIE_QUERY = "search/movie"
     @GET(MOVIE_QUERY)
     suspend fun getMoviesByQuery(
         @Query("query") query: String,
@@ -42,11 +48,20 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MoviesDto>
 
+
+    // "https://api.themoviedb.org/3/movie/324234/similar"
+    @GET(SIMILAR_MOVIES)
+    suspend fun getSimilarMovies(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = MOVIE_API_KEY
+    ): Response<MoviesDto>
+
     companion object {
         const val TOP_RATED = "movie/top_rated"
         const val UPCOMING = "movie/upcoming"
         const val POPULAR = "movie/popular"
         const val MOVIE_DETAIL = "movie/{id}"
         const val MOVIE_QUERY = "search/movie"
+        const val SIMILAR_MOVIES = "movie/{movie_id}/similar"
     }
 }

@@ -3,6 +3,7 @@ package com.bedirhan.muuvi.feature.home.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetPopularMoviesUseCase
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetTopRatedMoviesUseCase
@@ -19,17 +20,17 @@ class HomeScreenViewModel @Inject constructor(
     private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
     private val getPopularMoviesUseCase: GetPopularMoviesUseCase
 ) : ViewModel() {
-    private val _topRatedMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
-    val topRatedMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
+    private val _topRatedMoviesLiveData = MutableLiveData<MovieListUiModel?>()
+    val topRatedMoviesLiveData: MutableLiveData<MovieListUiModel?>
         get() = _topRatedMoviesLiveData
 
-    private val _upcomingMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
-    val upcomingMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
+    private val _upcomingMoviesLiveData = MutableLiveData<MovieListUiModel?>()
+    val upcomingMoviesLiveData: MutableLiveData<MovieListUiModel?>
         get() = _upcomingMoviesLiveData
 
 
-    private val _popularMoviesLiveData = MutableLiveData<List<MovieUiModel?>?>()
-    val popularMoviesLiveData: MutableLiveData<List<MovieUiModel?>?>
+    private val _popularMoviesLiveData = MutableLiveData<MovieListUiModel?>()
+    val popularMoviesLiveData: MutableLiveData<MovieListUiModel?>
         get() = _popularMoviesLiveData
 
 
@@ -38,7 +39,7 @@ class HomeScreenViewModel @Inject constructor(
             try {
                 val movies = getTopRatedMoviesUseCase()
                 movies?.let {
-                    _topRatedMoviesLiveData.postValue(movies.results)
+                    _topRatedMoviesLiveData.postValue(movies)
                 }
 
             } catch (e: Exception) {
@@ -52,7 +53,7 @@ class HomeScreenViewModel @Inject constructor(
             try {
                 val movies = getPopularMoviesUseCase()
                 if (movies != null) {
-                    _popularMoviesLiveData.postValue(movies.results)
+                    _popularMoviesLiveData.postValue(movies)
                 }
             } catch (e: Exception) {
                 logE("get", e.message.toString())
@@ -65,7 +66,7 @@ class HomeScreenViewModel @Inject constructor(
             try {
                 val movies = getUpcomingMoviesUseCase()
                 if (movies != null) {
-                    _upcomingMoviesLiveData.postValue(movies.results)
+                    _upcomingMoviesLiveData.postValue(movies)
                 }
             } catch (e: Exception) {
                 logE("get", e.message.toString())

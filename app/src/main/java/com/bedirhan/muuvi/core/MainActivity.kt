@@ -1,7 +1,6 @@
 package com.bedirhan.muuvi.core
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -9,11 +8,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupWithNavController
 import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.ActivityMainBinding
 import com.bedirhan.muuvi.databinding.DrawerHeaderBinding
+import com.bedirhan.muuvi.utils.extensions.handleNavigation
 import com.bedirhan.muuvi.utils.extensions.logE
+import com.bedirhan.muuvi.utils.extensions.setupDrawerListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,39 +55,36 @@ class MainActivity : AppCompatActivity() {
         binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
-                // Optional: Handle drawer slide event
-            }
+        binding.drawerLayout.setupDrawerListener(
+            onDrawerClosed = { logE("drawer is closed") },
+            onDrawerStateChanged = { newState -> logE("MainActivity", "onDrawerStateChanged: $newState") }
+        )
 
-            override fun onDrawerOpened(drawerView: View) {
-                // Optional: Handle drawer opened event
-            }
-
-            override fun onDrawerClosed(drawerView: View) {
-                logE("drawer is closed")
-            }
-
-            override fun onDrawerStateChanged(newState: Int) {
-                logE("MainActivity", "onDrawerStateChanged: $newState")
-            }
-        })
     }
 
     private fun setupNavigation() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
-        val navView = binding.navigationView
 
         appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
-        navView.setupWithNavController(navController)
+
+        binding.navigationView.handleNavigation(navController) { itemId ->
+            when (itemId) {
+                R.id.homeScreenFragment -> {
+                    navController.navigate(R.id.homeScreenFragment)
+                    true
+                }
+                R.id.searchFragment -> {
+                    navController.navigate(R.id.searchFragment)
+                    true
+                }
+                else -> false
+            }
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             handleDestinationChange(destination.id)
-        }
-        navView.setNavigationItemSelectedListener { menuItem ->
-            handleNavigationItemSelected(menuItem.itemId)
-            true
         }
     }
 
@@ -95,21 +92,11 @@ class MainActivity : AppCompatActivity() {
         if (destinationId == R.id.authScreen) {
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             toggle.isDrawerIndicatorEnabled = false
-            supportActionBar?.hide()
         } else {
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             toggle.isDrawerIndicatorEnabled = true
-            supportActionBar?.show()
         }
         toggle.syncState()
         binding.toolbarTitle.text = navController.currentDestination?.label
-    }
-
-    private fun handleNavigationItemSelected(itemId: Int) {
-        when (itemId) {
-            R.id.homeScreenFragment -> navController.navigate(R.id.homeScreenFragment)
-            R.id.searchFragment -> navController.navigate(R.id.searchFragment)
-        }
-        binding.drawerLayout.closeDrawers()
     }
 }

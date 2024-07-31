@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Size -->
-    <dimen name="double_extra_large_size">22sp</dimen>
+    <dimen name="double_extra_large_size">26sp</dimen>
     <dimen name="extra_large_size">18sp</dimen>
     <dimen name="large_size">16sp</dimen>
     <dimen name="medium_size">12sp</dimen>

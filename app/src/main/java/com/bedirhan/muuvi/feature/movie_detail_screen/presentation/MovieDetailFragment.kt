@@ -69,7 +69,6 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
-        setupSwipeRefreshLayout()
         observeMovieDetail()
         observeMovies(getArgs())
 
@@ -104,11 +103,6 @@ class MovieDetailFragment : Fragment() {
         )
     }
 
-    private fun setupSwipeRefreshLayout() {
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            observeMovieDetail()
-        }
-    }
     // observe movie detail 1 iş yapmadı flowların amacı vs. veri değiştiyse haber vermektri
 
     private fun observeMovieDetail() =
@@ -122,7 +116,6 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Success -> {
-                                swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
                                 resource.data?.let { movieDetail ->
                                     setupUI(movieDetail)
@@ -130,7 +123,6 @@ class MovieDetailFragment : Fragment() {
                             }
 
                             is Resource.Error -> {
-                                swipeRefreshLayout.isRefreshing = false
                                 showShimmerEffect(false)
                                 root.showErrorSnackbar(resource.message)
                             }
@@ -155,7 +147,6 @@ class MovieDetailFragment : Fragment() {
     private fun showShimmerEffect(show: Boolean) {
         binding.apply {
             if (show) shimmerLayout.root.show() else shimmerLayout.root.hide()
-            if (show) scrollViewContent.hide() else scrollViewContent.show()
         }
     }
 

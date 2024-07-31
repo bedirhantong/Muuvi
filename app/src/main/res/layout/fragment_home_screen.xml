@@ -35,7 +35,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimary"
-                    style="@style/SeeAllText"
+                    style="@style/CategoryText"
                     android:textStyle="bold"
                     android:text="@string/home_popular_title" />
 
@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/SeeAllText"
-                        android:textStyle="bold"
+                        android:textStyle="normal"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="@string/home_see_all" />
 
@@ -85,6 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="20dp"
                 android:paddingHorizontal="15dp"
                 android:gravity="center_vertical">
 
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/colorPrimary"
-                    style="@style/SeeAllText"
+                    style="@style/CategoryText"
                     android:textStyle="bold"
                     android:text="@string/home_upcoming_title" />
 
@@ -110,7 +111,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/colorPrimaryDark"
                         style="@style/SeeAllText"
-                        android:textStyle="bold"
+                        android:textStyle="normal"
                         android:text="@string/home_see_all" />
 
                     <ImageView
@@ -144,6 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="15dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
@@ -152,7 +154,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    style="@style/SeeAllText"
+                    style="@style/CategoryText"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"
                     android:text="@string/home_trending_title" />
@@ -168,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/SeeAllText"
-                        android:textStyle="bold"
+                        android:textStyle="normal"
                         android:textColor="@color/colorPrimaryDark"
                         android:text="@string/home_see_all" />
 

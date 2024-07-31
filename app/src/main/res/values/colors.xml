@@ -5,7 +5,7 @@
     <color name="colorPrimary">#1E2C3F</color>
 
     <color name="colorSecondary">#E86A33</color>
-    <color name="colorPrimaryDark">#E86A33</color>
+    <color name="colorPrimaryDark">#FF834D</color>
     <color name="colorAccent">#E39D36</color>
     <color name="button_enabled">#4CAF50</color>
     <color name="button_disabled">#9099A8</color>
@@ -17,5 +17,6 @@
     <color name="colorShimmerHeaderLabel">#686D75</color>
     <color name="colorShimmerFooterLabel">#545557</color>
     <color name="black_50">#AD1E2C3F</color>
-    <color name="login_auth_bg">#94FFFFFF</color>
+    <color name="login_auth_card">#88FFFFFF</color>
+    <color name="login_auth_bg">#921E2C3F</color>
 </resources>

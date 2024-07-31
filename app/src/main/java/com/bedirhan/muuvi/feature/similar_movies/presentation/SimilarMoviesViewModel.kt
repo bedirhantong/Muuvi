@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SimilarMoviesViewModel @Inject constructor(
     private val getSimilarMoviesUseCase: GetSimilarMoviesUseCase
-): ViewModel() {
+) : ViewModel() {
     private val _movieList = MutableStateFlow<Resource<MovieListUiModel?>>(Resource.Loading())
     val movieList: StateFlow<Resource<MovieListUiModel?>> = _movieList
 
@@ -26,11 +26,13 @@ class SimilarMoviesViewModel @Inject constructor(
                     is Resource.Loading -> {
                         _movieList.value = Resource.Loading()
                     }
+
                     is Resource.Success -> {
                         resource.data?.let {
                             _movieList.value = Resource.Success(resource.data)
                         }
                     }
+
                     is Resource.Error -> {
                         _movieList.value = Resource.Error(resource.message)
                     }

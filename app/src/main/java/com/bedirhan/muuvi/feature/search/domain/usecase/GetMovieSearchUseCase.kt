@@ -3,7 +3,6 @@ package com.bedirhan.muuvi.feature.search.domain.usecase
 import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.feature.shared.movie.domain.MovieRepository
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
-import com.bedirhan.muuvi.utils.extensions.logE
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

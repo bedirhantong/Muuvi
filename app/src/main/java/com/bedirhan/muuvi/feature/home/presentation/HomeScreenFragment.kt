@@ -66,12 +66,10 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun navigateToListMoviesFragment(movieList: MovieListUiModel?, category: String) {
-        val action = movieList?.let {
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToSimilarMoviesFragment(
-                234
+        movieList?.let {
+            val action = HomeScreenFragmentDirections.actionHomeScreenFragmentToListMoviesFragment(
+                movieList
             )
-        }
-        if (action != null) {
             findNavController().navigate(action)
         }
     }

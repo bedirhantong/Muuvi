@@ -27,7 +27,6 @@ interface MovieApiService {
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MoviesDto>
 
-
     // "https://api.themoviedb.org/3/movie/324234?language=en-US"
     // MOVIE_DETAIL = "movie/{id}"
     @GET(MOVIE_DETAIL)
@@ -35,7 +34,6 @@ interface MovieApiService {
         @Path("id") id: Int,
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MovieDetailDto>
-
 
     // "https://api.themoviedb.org/3/search/movie?query=asdas"
     // MOVIE_QUERY = "search/movie"
@@ -47,7 +45,6 @@ interface MovieApiService {
         @Query("page") page: Int = 1,
         @Query("api_key") apiKey: String = MOVIE_API_KEY
     ): Response<MoviesDto>
-
 
     // "https://api.themoviedb.org/3/movie/324234/similar"
     @GET(SIMILAR_MOVIES)

@@ -18,5 +18,9 @@ class MovieViewHolder(
         }
         textViewTitle.text = movie.title
         imageViewMovie.loadImage(MOVIE_IMAGE_POSTER_PATH + movie.posterPath)
+        tvVoteCount.text = movie.voteCount.toString()
+        tvPopularity.text = movie.popularity.toString()
+        tvOverview.text = movie.overview
+        tvReleaseDate.text = movie.releaseDate
     }
 }

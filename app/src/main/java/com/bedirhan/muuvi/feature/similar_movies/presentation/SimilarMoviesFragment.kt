@@ -1,7 +1,6 @@
 package com.bedirhan.muuvi.feature.similar_movies.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentSimilarMoviesBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
-import com.bedirhan.muuvi.feature.movie_detail_screen.presentation.MovieDetailFragmentArgs
 import com.bedirhan.muuvi.feature.similar_movies.presentation.adapter.SimilarMoviesAdapter
 import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +20,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SimilarMoviesFragment(): Fragment() {
+class SimilarMoviesFragment(
+    private val movieId: Int
+) : Fragment() {
     private var _binding: FragmentSimilarMoviesBinding? = null
     private val binding get() = _binding!!
     private val viewModel: SimilarMoviesViewModel by viewModels()
@@ -39,7 +38,7 @@ class SimilarMoviesFragment(): Fragment() {
         val view = binding.root
         setupRecyclerView()
         observeSimilarMovies(
-
+            movieId = movieId
         )
         return view
     }
@@ -53,12 +52,15 @@ class SimilarMoviesFragment(): Fragment() {
                         is Resource.Loading -> {
                             // showShimmerEffect(true)
                         }
+
                         is Resource.Success -> {
                             resource.data?.let { movieListUiModel ->
-                                val movies = movieListUiModel.results?.filterNotNull() ?: emptyList()
+                                val movies =
+                                    movieListUiModel.results?.filterNotNull() ?: emptyList()
                                 similarViewModelAdapter.submitList(movies)
                             }
                         }
+
                         is Resource.Error -> {
                             root.showErrorSnackbar(resource.message)
                         }
@@ -67,7 +69,6 @@ class SimilarMoviesFragment(): Fragment() {
             }
         }
     }
-
 
     private fun setupRecyclerView() = binding.apply {
         rvSimilarMoviesRecyclerView.adapter = similarViewModelAdapter

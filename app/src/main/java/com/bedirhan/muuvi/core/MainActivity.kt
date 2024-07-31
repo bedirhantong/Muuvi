@@ -22,9 +22,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerHeaderBinding: DrawerHeaderBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-    private lateinit var navController: NavController // Store the NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,19 +46,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupDrawerLayout() {
-        drawerLayout = binding.drawerLayout
-        val toolbar = binding.toolbar
-
         toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar,
+            this, binding.drawerLayout, binding.toolbar,
             R.string.navigation_drawer_open, R.string.navigation_drawer_close
         ).apply {
             drawerArrowDrawable.color = ContextCompat.getColor(this@MainActivity, R.color.white)
         }
-        drawerLayout.addDrawerListener(toggle)
+        binding.drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
+        binding.drawerLayout.addDrawerListener(object : DrawerLayout.DrawerListener {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 // Optional: Handle drawer slide event
             }
@@ -84,12 +80,11 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         val navView = binding.navigationView
 
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(navController.graph, binding.drawerLayout)
         navView.setupWithNavController(navController)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             handleDestinationChange(destination.id)
         }
-
         navView.setNavigationItemSelectedListener { menuItem ->
             handleNavigationItemSelected(menuItem.itemId)
             true
@@ -98,11 +93,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleDestinationChange(destinationId: Int) {
         if (destinationId == R.id.authScreen) {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             toggle.isDrawerIndicatorEnabled = false
             supportActionBar?.hide()
         } else {
-            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             toggle.isDrawerIndicatorEnabled = true
             supportActionBar?.show()
         }
@@ -115,6 +110,6 @@ class MainActivity : AppCompatActivity() {
             R.id.homeScreenFragment -> navController.navigate(R.id.homeScreenFragment)
             R.id.searchFragment -> navController.navigate(R.id.searchFragment)
         }
-        drawerLayout.closeDrawers()
+        binding.drawerLayout.closeDrawers()
     }
 }

@@ -110,6 +110,9 @@ dependencies {
     implementation("me.relex:circleindicator:2.1.6")
 
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+    // animated splash screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
 }
 
 // Hilt

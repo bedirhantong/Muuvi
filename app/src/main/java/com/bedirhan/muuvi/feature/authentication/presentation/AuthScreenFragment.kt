@@ -1,18 +1,17 @@
 package com.bedirhan.muuvi.feature.authentication.presentation
 
-import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.*
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.FragmentAuthScreenBinding
+import com.bedirhan.muuvi.utils.extensions.addTextChangedListener
+import com.bedirhan.muuvi.utils.extensions.clearError
+import com.bedirhan.muuvi.utils.extensions.setErrorC
+import com.bedirhan.muuvi.utils.extensions.setSuccessIcon
+import com.bedirhan.muuvi.utils.extensions.updateState
 
 class AuthScreenFragment : Fragment() {
 
@@ -38,27 +37,17 @@ class AuthScreenFragment : Fragment() {
         }
 
         binding.edtEmail.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                if (binding.tilEmail.isErrorEnabled) {
-                    binding.tilEmail.isErrorEnabled = false
-                }
-            }
+            if (hasFocus) binding.tilEmail.clearError()
         }
 
         binding.edtPassword.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 if (binding.tilPassword.isErrorEnabled) {
-                    binding.tilPassword.isErrorEnabled = false
+                    binding.tilPassword.clearError()
                 }
             } else {
                 if (isPasswordValid()) {
-                    if (binding.tilEmail.isErrorEnabled) {
-                        binding.tilEmail.isErrorEnabled = false
-                    }
-                    binding.tilPassword.apply {
-                        setStartIconDrawable(R.drawable.check_circle)
-                        setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
-                    }
+                    binding.tilPassword.setSuccessIcon()
                 }
             }
         }
@@ -68,38 +57,24 @@ class AuthScreenFragment : Fragment() {
             findNavController().navigate(action)
         }
 
-        binding.edtEmail.addTextChangedListener(loginTextWatcher)
-        binding.edtPassword.addTextChangedListener(loginTextWatcher)
+        binding.edtEmail.addTextChangedListener { text ->
+            viewModel.email = text
+            updateButtonState()
+        }
+
+        binding.edtPassword.addTextChangedListener { text ->
+            viewModel.password = text
+            updateButtonState()
+        }
 
         updateButtonState()
     }
 
-    private val loginTextWatcher = object : TextWatcher {
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            viewModel.email = binding.edtEmail.text.toString()
-            viewModel.password = binding.edtPassword.text.toString()
-            updateButtonState()
-        }
-
-        override fun afterTextChanged(s: Editable?) {}
-    }
-
     private fun updateButtonState() {
-        val context: Context = requireContext()
-        binding.loginButton.isEnabled = viewModel.isLoginButtonEnabled()
-        binding.loginButton.backgroundTintList =
-            ColorStateList.valueOf(if (binding.loginButton.isEnabled) Color.DKGRAY else Color.LTGRAY)
-
-        if (viewModel.isEmailValid() && viewModel.isPasswordValid()) {
-            binding.loginButton.isEnabled = true
-            binding.loginButton.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_enabled))
-        } else {
-            binding.loginButton.isEnabled = false
-            binding.loginButton.backgroundTintList =
-                ColorStateList.valueOf(ContextCompat.getColor(context, R.color.button_disabled))
-        }
+        binding.loginButton.updateState(
+            viewModel.isLoginButtonEnabled(),
+            requireContext()
+        )
     }
 
     private fun isPasswordValid(): Boolean {
@@ -111,10 +86,7 @@ class AuthScreenFragment : Fragment() {
             errorMessage = getString(R.string.password_detail)
         }
         if (errorMessage != null) {
-            binding.tilPassword.apply {
-                isErrorEnabled = true
-                error = errorMessage
-            }
+            binding.tilPassword.setErrorC(errorMessage)
         }
         return errorMessage == null
     }

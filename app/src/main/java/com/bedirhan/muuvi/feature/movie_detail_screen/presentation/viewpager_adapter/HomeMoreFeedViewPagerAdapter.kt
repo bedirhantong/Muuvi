@@ -10,13 +10,13 @@ class HomeMoreFeedViewPagerAdapter (
     fragmentActivity: FragmentActivity,
     private val movieId: Int
 ) : FragmentStateAdapter(fragmentActivity) {
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = 1
     override fun createFragment(position: Int): Fragment {
         when (position) {
+//            0 -> {
+//                return MovieCastFragment()
+//            }
             0 -> {
-                return MovieCastFragment()
-            }
-            1 -> {
                 return SimilarMoviesFragment(movieId)
             }
         }

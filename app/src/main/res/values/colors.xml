@@ -19,4 +19,6 @@
     <color name="black_50">#AD1E2C3F</color>
     <color name="login_auth_card">#88FFFFFF</color>
     <color name="login_auth_bg">#921E2C3F</color>
+
+    <color name="transparent">#001E2C3F</color>
 </resources>

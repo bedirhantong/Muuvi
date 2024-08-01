@@ -17,7 +17,7 @@
     <color name="colorShimmerHeaderLabel">#686D75</color>
     <color name="colorShimmerFooterLabel">#545557</color>
     <color name="black_50">#AD1E2C3F</color>
-    <color name="login_auth_card">#88FFFFFF</color>
+    <color name="login_auth_card">#BAFFFFFF</color>
     <color name="login_auth_bg">#1E2C3F</color>
     <color name="gradient_center">#2A294C</color>
     <color name="gradient_end">#484783</color>

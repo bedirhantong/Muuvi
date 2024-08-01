@@ -10,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.FragmentLoginBinding
 import com.bedirhan.muuvi.feature.authentication.presentation.AuthScreenFragmentDirections
-import com.bedirhan.muuvi.feature.authentication.presentation.AuthScreenViewModel
 import com.bedirhan.muuvi.utils.extensions.addTextChangedListener
 import com.bedirhan.muuvi.utils.extensions.clearError
 import com.bedirhan.muuvi.utils.extensions.setErrorC
@@ -20,7 +19,7 @@ import com.bedirhan.muuvi.utils.extensions.updateState
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: AuthScreenViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

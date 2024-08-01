@@ -13,10 +13,13 @@
     <string name="auth_header">Muuvi.</string>
     <string name="auth_description">Please login to your account</string>
     <string name="email_hint">Email Address</string>
+    <string name="full_name_hint">Full Name</string>
     <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
     <string name="login_button">Login</string>
+    <string name="signup_button">Signup</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="have_no_account_yet">Don\'t have an account? Sign Up</string>
+    <string name="github_me">github/bedirhantong</string>
 
     <!-- Home Strings -->
     <string name="home_see_all">See all</string>
@@ -53,6 +56,8 @@
     <!-- Viewpager & Tab Layout Strings -->
     <string name="cast">Cast</string>
     <string name="similar_movies">Similar Movies</string>
+    <string name="login">Login</string>
+    <string name="signup">Signup</string>
 
 
 </resources>

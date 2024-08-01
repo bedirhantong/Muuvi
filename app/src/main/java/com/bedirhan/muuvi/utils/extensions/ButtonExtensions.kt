@@ -9,7 +9,7 @@ import com.bedirhan.muuvi.R
 fun Button.updateState(isEnabled: Boolean, context: Context) {
     this.isEnabled = isEnabled
     backgroundTintList = ColorStateList.valueOf(
-        if (isEnabled) ContextCompat.getColor(context, R.color.button_enabled)
+        if (isEnabled) ContextCompat.getColor(context, R.color.colorPrimary)
         else ContextCompat.getColor(context, R.color.button_disabled)
     )
 }

@@ -13,8 +13,10 @@ import com.bedirhan.muuvi.R
 import com.bedirhan.muuvi.databinding.ActivityMainBinding
 import com.bedirhan.muuvi.databinding.DrawerHeaderBinding
 import com.bedirhan.muuvi.utils.extensions.handleNavigation
+import com.bedirhan.muuvi.utils.extensions.hide
 import com.bedirhan.muuvi.utils.extensions.logE
 import com.bedirhan.muuvi.utils.extensions.setupDrawerListener
+import com.bedirhan.muuvi.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -99,9 +101,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleDestinationChange(destinationId: Int) {
         if (destinationId == R.id.authScreen) {
+            binding.toolbar.hide()
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             toggle.isDrawerIndicatorEnabled = false
         } else {
+            binding.toolbar.show()
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             toggle.isDrawerIndicatorEnabled = true
         }

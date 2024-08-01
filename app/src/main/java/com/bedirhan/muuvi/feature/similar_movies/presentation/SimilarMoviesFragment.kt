@@ -14,7 +14,7 @@ import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentSimilarMoviesBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
 import com.bedirhan.muuvi.feature.similar_movies.presentation.adapter.SimilarMoviesAdapter
-import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
+import com.bedirhan.muuvi.utils.extensions.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -62,7 +62,7 @@ class SimilarMoviesFragment(
                         }
 
                         is Resource.Error -> {
-                            root.showErrorSnackbar(resource.message)
+                            root.showSnackbar(resource.message)
                         }
                     }
                 }

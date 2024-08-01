@@ -15,7 +15,7 @@ import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentSearchMoviesBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
 import com.bedirhan.muuvi.feature.search.presentation.adapter.SearchMoviesAdapter
-import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
+import com.bedirhan.muuvi.utils.extensions.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -85,7 +85,7 @@ class SearchMoviesFragment : Fragment() {
                         is Resource.Error -> {
                             rvSearchedMoviesRecyclerView.visibility = View.GONE
                             tvPlaceholder.visibility = View.VISIBLE
-                            root.showErrorSnackbar(resource.message)
+                            root.showSnackbar(resource.message)
                         }
                     }
                 }

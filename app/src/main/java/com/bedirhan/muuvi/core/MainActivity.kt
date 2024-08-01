@@ -59,7 +59,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.drawerLayout.setupDrawerListener(
             onDrawerClosed = { logE("drawer is closed") },
-            onDrawerStateChanged = { newState -> logE("MainActivity", "onDrawerStateChanged: $newState") }
+            onDrawerStateChanged = { newState ->
+                logE(
+                    "MainActivity",
+                    "onDrawerStateChanged: $newState"
+                )
+            }
         )
 
     }
@@ -77,10 +82,12 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(R.id.homeScreenFragment)
                     true
                 }
+
                 R.id.searchFragment -> {
                     navController.navigate(R.id.searchFragment)
                     true
                 }
+
                 else -> false
             }
         }

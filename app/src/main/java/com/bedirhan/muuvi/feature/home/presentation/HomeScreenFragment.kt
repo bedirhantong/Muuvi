@@ -10,11 +10,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentHomeScreenBinding
 import com.bedirhan.muuvi.feature.home.presentation.adapter.MovieRecyclerAdapter
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
-import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
+import com.bedirhan.muuvi.utils.extensions.hide
+import com.bedirhan.muuvi.utils.extensions.show
+import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -24,10 +28,10 @@ class HomeScreenFragment : Fragment() {
 
     private val viewModel: HomeScreenViewModel by viewModels()
 
-    private val topRatedMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+    private val popularMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
         MovieRecyclerAdapter(::onClickMovie)
     }
-    private val popularMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
+    private val topRatedMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
         MovieRecyclerAdapter(::onClickMovie)
     }
     private val upcomingMoviesRecyclerAdapter: MovieRecyclerAdapter by lazy {
@@ -46,23 +50,6 @@ class HomeScreenFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerViews()
         observeMovies()
-        collectApiRequest()
-    }
-
-    private fun collectApiRequest() = binding.apply {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getPopularMovies()
-                viewModel.getTopRatedMovies()
-                viewModel.getUpcomingMovies()
-            }
-        }
-    }
-
-    private fun onClickMovie(movieId: Int) {
-        val action =
-            HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
-        findNavController().navigate(action)
     }
 
     private fun navigateToListMoviesFragment(movieList: MovieListUiModel?, category: String) {
@@ -80,33 +67,110 @@ class HomeScreenFragment : Fragment() {
         rvUpcomingMovies.adapter = upcomingMoviesRecyclerAdapter
 
         tvShowAllPopularMovies.setOnClickListener {
-            navigateToListMoviesFragment(viewModel.popularMoviesLiveData.value, "Popular")
+            navigateToListMoviesFragment(viewModel.popularMovies.value.data, "Popular")
         }
         tvShowUpcomingMovies.setOnClickListener {
-            navigateToListMoviesFragment(viewModel.upcomingMoviesLiveData.value, "Upcoming")
+            navigateToListMoviesFragment(viewModel.upcomingMovies.value.data, "Upcoming")
         }
         tvShowAllTrendingMovies.setOnClickListener {
-            navigateToListMoviesFragment(viewModel.topRatedMoviesLiveData.value, "Trending")
+            navigateToListMoviesFragment(viewModel.topRatedMovies.value.data, "Trending")
         }
     }
 
-    private fun observeMovies() = lifecycleScope.launch {
-        repeatOnLifecycle(Lifecycle.State.STARTED) {
-            viewModel.topRatedMoviesLiveData.observe(viewLifecycleOwner) { articles ->
-                articles?.let {
-                    topRatedMoviesRecyclerAdapter.submitList(articles.results)
+
+    private fun observeMovies() = binding.apply {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.popularMovies.collectLatest { resource ->
+                        when (resource) {
+                            is Resource.Loading -> {
+                                showShimmerEffect(true)
+                                shimmerPopular.show()
+                                rvPopularMovies.hide()
+                            }
+
+                            is Resource.Success -> {
+                                showShimmerEffect(false)
+                                shimmerPopular.hide()
+                                rvPopularMovies.show()
+                                resource.data?.let { data ->
+                                    popularMoviesRecyclerAdapter.submitList(data.results)
+                                }
+                            }
+
+                            is Resource.Error -> {
+                                showShimmerEffect(false)
+                                root.showErrorSnackbar(resource.message)
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.topRatedMovies.collectLatest { resource ->
+                        when (resource) {
+                            is Resource.Loading -> {
+                                shimmerTrend.show()
+                                rvTopRatedMovies.hide()
+                                showShimmerEffect(true)
+                            }
+
+                            is Resource.Success -> {
+                                showShimmerEffect(false)
+                                shimmerTrend.hide()
+                                rvTopRatedMovies.show()
+                                resource.data?.let { data ->
+                                    topRatedMoviesRecyclerAdapter.submitList(data.results)
+                                }
+                            }
+
+                            is Resource.Error -> {
+                                showShimmerEffect(false)
+                                root.showErrorSnackbar(resource.message)
+                            }
+                        }
+                    }
+                }
+
+                launch {
+                    viewModel.upcomingMovies.collectLatest { resource ->
+                        when (resource) {
+                            is Resource.Loading -> {
+                                shimmerUpcoming.show()
+                                rvUpcomingMovies.hide()
+                                showShimmerEffect(true)
+                            }
+
+                            is Resource.Success -> {
+                                showShimmerEffect(false)
+                                shimmerUpcoming.hide()
+                                rvUpcomingMovies.show()
+                                resource.data?.let { data ->
+                                    upcomingMoviesRecyclerAdapter.submitList(data.results)
+                                }
+                            }
+
+                            is Resource.Error -> {
+                                showShimmerEffect(false)
+                                root.showErrorSnackbar(resource.message)
+                            }
+                        }
+                    }
                 }
             }
-            viewModel.popularMoviesLiveData.observe(viewLifecycleOwner) { articles ->
-                articles?.let {
-                    popularMoviesRecyclerAdapter.submitList(articles.results)
-                }
-            }
-            viewModel.upcomingMoviesLiveData.observe(viewLifecycleOwner) { articles ->
-                articles?.let {
-                    upcomingMoviesRecyclerAdapter.submitList(articles.results)
-                }
-            }
+        }
+    }
+
+    private fun onClickMovie(movieId: Int) {
+        val action =
+            HomeScreenFragmentDirections.actionHomeScreenFragmentToMovieDetailFragment(movieId)
+        findNavController().navigate(action)
+    }
+
+    private fun showShimmerEffect(show: Boolean) {
+        binding.apply {
+            if (show) shimmerLayout.root.show() else shimmerLayout.root.hide()
         }
     }
 

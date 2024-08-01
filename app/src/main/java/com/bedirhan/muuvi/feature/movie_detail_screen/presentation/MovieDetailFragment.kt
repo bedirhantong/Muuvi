@@ -51,6 +51,13 @@ class MovieDetailFragment : Fragment() {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViewPager()
+        observeMovieDetail()
+        observeMovies(getArgs())
+        viewModel.getMovieDetail(getArgs())
+    }
 
     private fun observeMovies(movieId: Int) = lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -66,14 +73,6 @@ class MovieDetailFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupViewPager()
-        observeMovieDetail()
-        observeMovies(getArgs())
-
-        viewModel.getMovieDetail(getArgs())
-    }
 
     private fun setupViewPager() = binding.apply {
         binding.movieDetailMoreFeedViewPager.adapter =

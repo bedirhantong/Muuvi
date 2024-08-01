@@ -1,76 +1,109 @@
 package com.bedirhan.muuvi.feature.home.presentation
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
-import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetPopularMoviesUseCase
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetTopRatedMoviesUseCase
 import com.bedirhan.muuvi.feature.shared.movie.domain.usecase.GetUpcomingMoviesUseCase
-import com.bedirhan.muuvi.utils.extensions.logE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
+    private val getPopularMoviesUseCase: GetPopularMoviesUseCase,
     private val getTopRatedMoviesUseCase: GetTopRatedMoviesUseCase,
-    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase,
-    private val getPopularMoviesUseCase: GetPopularMoviesUseCase
+    private val getUpcomingMoviesUseCase: GetUpcomingMoviesUseCase
 ) : ViewModel() {
-    private val _topRatedMoviesLiveData = MutableLiveData<MovieListUiModel?>()
-    val topRatedMoviesLiveData: MutableLiveData<MovieListUiModel?>
-        get() = _topRatedMoviesLiveData
 
-    private val _upcomingMoviesLiveData = MutableLiveData<MovieListUiModel?>()
-    val upcomingMoviesLiveData: MutableLiveData<MovieListUiModel?>
-        get() = _upcomingMoviesLiveData
+    private val _popularMovies = MutableStateFlow<Resource<MovieListUiModel>>(Resource.Loading())
+    val popularMovies: StateFlow<Resource<MovieListUiModel>> get() = _popularMovies
 
+    private val _topRatedMovies = MutableStateFlow<Resource<MovieListUiModel>>(Resource.Loading())
+    val topRatedMovies: StateFlow<Resource<MovieListUiModel>> get() = _topRatedMovies
 
-    private val _popularMoviesLiveData = MutableLiveData<MovieListUiModel?>()
-    val popularMoviesLiveData: MutableLiveData<MovieListUiModel?>
-        get() = _popularMoviesLiveData
+    private val _upcomingMovies = MutableStateFlow<Resource<MovieListUiModel>>(Resource.Loading())
+    val upcomingMovies: StateFlow<Resource<MovieListUiModel>> get() = _upcomingMovies
 
+    init {
+        fetchMovies()
+    }
 
-    fun getTopRatedMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movies = getTopRatedMoviesUseCase()
-                movies?.let {
-                    _topRatedMoviesLiveData.postValue(movies)
-                }
-
-            } catch (e: Exception) {
-                logE("get", e.message.toString())
-            }
+    private fun fetchMovies() {
+        viewModelScope.launch {
+            fetchPopularMovies()
+            fetchTopRatedMovies()
+            fetchUpcomingMovies()
         }
     }
 
-    fun getPopularMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movies = getPopularMoviesUseCase()
-                if (movies != null) {
-                    _popularMoviesLiveData.postValue(movies)
+    private fun fetchPopularMovies() {
+        getPopularMoviesUseCase.invoke()
+            .onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _popularMovies.value = Resource.Loading()
+                    }
+
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            _popularMovies.value = Resource.Success(resource.data)
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _popularMovies.value = Resource.Error(resource.message)
+                    }
                 }
-            } catch (e: Exception) {
-                logE("get", e.message.toString())
-            }
-        }
+            }.launchIn(viewModelScope)
     }
 
-    fun getUpcomingMovies() {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val movies = getUpcomingMoviesUseCase()
-                if (movies != null) {
-                    _upcomingMoviesLiveData.postValue(movies)
+    private fun fetchTopRatedMovies() {
+        getTopRatedMoviesUseCase.invoke()
+            .onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _topRatedMovies.value = Resource.Loading()
+                    }
+
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            _topRatedMovies.value = Resource.Success(resource.data)
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _topRatedMovies.value = Resource.Error(resource.message)
+                    }
                 }
-            } catch (e: Exception) {
-                logE("get", e.message.toString())
-            }
-        }
+            }.launchIn(viewModelScope)
+    }
+
+    private fun fetchUpcomingMovies() {
+        getUpcomingMoviesUseCase.invoke()
+            .onEach { resource ->
+                when (resource) {
+                    is Resource.Loading -> {
+                        _upcomingMovies.value = Resource.Loading()
+                    }
+
+                    is Resource.Success -> {
+                        resource.data?.let {
+                            _upcomingMovies.value = Resource.Success(resource.data)
+                        }
+                    }
+
+                    is Resource.Error -> {
+                        _upcomingMovies.value = Resource.Error(resource.message)
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 }
+

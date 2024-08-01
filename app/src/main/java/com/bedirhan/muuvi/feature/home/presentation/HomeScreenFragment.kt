@@ -6,20 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.bedirhan.muuvi.common.Resource
 import com.bedirhan.muuvi.databinding.FragmentHomeScreenBinding
 import com.bedirhan.muuvi.feature.home.presentation.adapter.MovieRecyclerAdapter
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel
+import com.bedirhan.muuvi.utils.extensions.collectPageState
+import com.bedirhan.muuvi.utils.extensions.handleResource
 import com.bedirhan.muuvi.utils.extensions.hide
 import com.bedirhan.muuvi.utils.extensions.show
-import com.bedirhan.muuvi.utils.extensions.showErrorSnackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeScreenFragment : Fragment() {
@@ -77,88 +72,41 @@ class HomeScreenFragment : Fragment() {
         }
     }
 
-
     private fun observeMovies() = binding.apply {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {
-                    viewModel.popularMovies.collectLatest { resource ->
-                        when (resource) {
-                            is Resource.Loading -> {
-                                showShimmerEffect(true)
-                                shimmerPopular.show()
-                                rvPopularMovies.hide()
-                            }
+        collectPageState(viewLifecycleOwner, viewModel.popularMovies) { resource ->
+            handleResource(
+                resource = resource,
+                shimmerLayout = shimmerPopular,
+                shimmerEffectLayout = shimmerEffectLayout,
+                recyclerView = rvPopularMovies,
+                onSuccess = { data ->
+                    popularMoviesRecyclerAdapter.submitList(data.results)
+                },
+            )
+        }
 
-                            is Resource.Success -> {
-                                showShimmerEffect(false)
-                                shimmerPopular.hide()
-                                rvPopularMovies.show()
-                                resource.data?.let { data ->
-                                    popularMoviesRecyclerAdapter.submitList(data.results)
-                                }
-                            }
+        collectPageState(viewLifecycleOwner, viewModel.topRatedMovies) { resource ->
+            handleResource(
+                resource = resource,
+                shimmerLayout = shimmerTrend,
+                shimmerEffectLayout = shimmerEffectLayout,
+                recyclerView = rvTopRatedMovies,
+                onSuccess = { data ->
+                    topRatedMoviesRecyclerAdapter.submitList(data.results)
+                },
+            )
+        }
 
-                            is Resource.Error -> {
-                                showShimmerEffect(false)
-                                root.showErrorSnackbar(resource.message)
-                            }
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.topRatedMovies.collectLatest { resource ->
-                        when (resource) {
-                            is Resource.Loading -> {
-                                shimmerTrend.show()
-                                rvTopRatedMovies.hide()
-                                showShimmerEffect(true)
-                            }
-
-                            is Resource.Success -> {
-                                showShimmerEffect(false)
-                                shimmerTrend.hide()
-                                rvTopRatedMovies.show()
-                                resource.data?.let { data ->
-                                    topRatedMoviesRecyclerAdapter.submitList(data.results)
-                                }
-                            }
-
-                            is Resource.Error -> {
-                                showShimmerEffect(false)
-                                root.showErrorSnackbar(resource.message)
-                            }
-                        }
-                    }
-                }
-
-                launch {
-                    viewModel.upcomingMovies.collectLatest { resource ->
-                        when (resource) {
-                            is Resource.Loading -> {
-                                shimmerUpcoming.show()
-                                rvUpcomingMovies.hide()
-                                showShimmerEffect(true)
-                            }
-
-                            is Resource.Success -> {
-                                showShimmerEffect(false)
-                                shimmerUpcoming.hide()
-                                rvUpcomingMovies.show()
-                                resource.data?.let { data ->
-                                    upcomingMoviesRecyclerAdapter.submitList(data.results)
-                                }
-                            }
-
-                            is Resource.Error -> {
-                                showShimmerEffect(false)
-                                root.showErrorSnackbar(resource.message)
-                            }
-                        }
-                    }
-                }
-            }
+        collectPageState(viewLifecycleOwner, viewModel.upcomingMovies) { resource ->
+            handleResource(
+                resource = resource,
+                shimmerLayout = shimmerUpcoming,
+                shimmerEffectLayout = shimmerEffectLayout,
+                recyclerView = rvUpcomingMovies,
+                onSuccess = { data ->
+                    upcomingMoviesRecyclerAdapter.submitList(data.results)
+                },
+            )
         }
     }
 
@@ -170,7 +118,7 @@ class HomeScreenFragment : Fragment() {
 
     private fun showShimmerEffect(show: Boolean) {
         binding.apply {
-            if (show) shimmerLayout.root.show() else shimmerLayout.root.hide()
+            if (show) shimmerEffectLayout.root.show() else shimmerEffectLayout.root.hide()
         }
     }
 

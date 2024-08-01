@@ -238,7 +238,7 @@
 
 
     <include
-        android:id="@+id/shimmerLayout"
+        android:id="@+id/shimmerEffectLayout"
         layout="@layout/layout_shimmer_home_movies"
         android:visibility="gone" />
 

@@ -10,14 +10,14 @@ plugins {
 
 android {
     namespace = "com.bedirhan.muuvi"
-    compileSdk = 34
+    compileSdk = Config.compileSdk
 
     defaultConfig {
-        applicationId = "com.bedirhan.muuvi"
-        minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        applicationId = Config.applicationId
+        minSdk = Config.minSdk
+        targetSdk = Config.targetSdk
+        versionCode = Config.versionCode
+        versionName = Config.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -26,7 +26,6 @@ android {
             applicationIdSuffix = ".debug"
             versionNameSuffix = "-debug"
             buildConfigField("boolean", "DEBUG", "true")
-
 
             // Use the proguard file
             proguardFiles(
@@ -59,60 +58,59 @@ android {
         buildConfig = true
         viewBinding = true
     }
+
 }
 
-val navVersion = "2.7.7"
-val lifecycleVersion = "2.7.0"
-val hiltVersion = "2.51.1"
-
 dependencies {
+    implementation(Dependencies.AndroidX.coreKtx)
+    implementation(Dependencies.AndroidX.constraintLayout)
+    implementation(Dependencies.AndroidX.activity)
+    implementation(Dependencies.AndroidX.appCompat)
+    implementation(Dependencies.Google.material)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.swiperefreshlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    // Test
+    testImplementation(Dependencies.Test.junit)
+    androidTestImplementation(Dependencies.Test.testExt)
+    androidTestImplementation(Dependencies.Test.espresso)
+
 
     // Dependency Injection - Hilt
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
+    implementation(Dependencies.DependencyInjection.hilt)
+    kapt(Dependencies.DependencyInjection.hiltCompiler)
 
     // Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation(Dependencies.Navigation.navigationFragment)
+    implementation(Dependencies.Navigation.navigationUi)
 
     // gson library
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(Dependencies.Retrofit.gson)
     // coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation(Dependencies.Coroutines.coroutines)
+    implementation(Dependencies.Coroutines.coroutinesCore)
+    implementation(Dependencies.Coroutines.gsonCoroutines)
+
     // retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(Dependencies.Retrofit.retrofit)
+    implementation(Dependencies.Retrofit.gson)
 
     // viewmodel and livedata
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion")
+    implementation(Dependencies.Lifecycle.viewmodel)
+    implementation(Dependencies.Lifecycle.livedata)
 
     //glide
-    implementation("com.github.bumptech.glide:glide:4.12.0")
-    kapt("com.github.bumptech.glide:compiler:4.12.0")
+    implementation(Dependencies.Glide.glide)
+    kapt(Dependencies.Glide.glideCompiler)
 
     // viewpager
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation(Dependencies.ViewPager.viewpager)
 
     // circular indicator
-    implementation("me.relex:circleindicator:2.1.6")
+    implementation(Dependencies.Indicator.circularIndicator)
 
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation(Dependencies.Effect.shimmerEffect)
 
     // animated splash screen
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(Dependencies.Splash.splashAnimation)
 }
 
 // Hilt

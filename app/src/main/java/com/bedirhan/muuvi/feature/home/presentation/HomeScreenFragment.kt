@@ -116,12 +116,6 @@ class HomeScreenFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun showShimmerEffect(show: Boolean) {
-        binding.apply {
-            if (show) shimmerEffectLayout.root.show() else shimmerEffectLayout.root.hide()
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

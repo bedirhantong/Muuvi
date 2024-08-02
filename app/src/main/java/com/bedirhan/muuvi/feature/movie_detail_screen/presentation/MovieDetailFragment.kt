@@ -20,6 +20,7 @@ import com.bedirhan.muuvi.utils.extensions.show
 import com.bedirhan.muuvi.utils.extensions.showSnackbar
 import com.bedirhan.muuvi.databinding.FragmentMovieDetailBinding
 import com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragmentDirections
+import com.bedirhan.muuvi.feature.movie_detail_screen.presentation.viewpager_adapter.HomeMoreFeedViewPagerAdapter
 import com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieUiModel
 import com.bedirhan.muuvi.feature.similar_movies.presentation.adapter.SimilarMoviesAdapter
 import com.bedirhan.muuvi.utils.extensions.setupViewPager
@@ -68,10 +69,12 @@ class MovieDetailFragment : Fragment() {
     }
 
     private fun setupViewPager() {
+        val adapter = HomeMoreFeedViewPagerAdapter(fragmentActivity = requireActivity(), movieId = getArgs())
         setupViewPager(
             viewPager = binding.movieDetailMoreFeedViewPager,
             tabLayout = binding.tabLayout,
             fragmentActivity = requireActivity(),
+            fragmentStateAdapter = adapter,
             movieId = getArgs()
         )
     }

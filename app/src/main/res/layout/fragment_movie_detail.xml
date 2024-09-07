@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        tools:ignore="MissingClass">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap"
+            app:contentScrim="?attr/colorPrimary">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivBackdropDetails"
+                    android:layout_width="0dp"
+                    android:layout_height="270dp"
+                    android:contentDescription="@string/movie_detail_tools_title"
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/auth_bg" />
+
+                <ImageView
+                    android:id="@+id/ivPoster"
+                    android:layout_width="100dp"
+                    android:layout_height="150dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="-75dp"
+                    android:contentDescription="@string/movie_detail_tools_title"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintBottom_toBottomOf="@id/tvMovieTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivBackdropDetails"
+                    tools:src="@drawable/movie_cover" />
+
+                <TextView
+                    android:id="@+id/tvMovieTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:paddingHorizontal="14dp"
+                    android:paddingTop="8dp"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivPoster"
+                    app:layout_constraintTop_toBottomOf="@id/ivBackdropDetails"
+                    tools:text="@string/movie_detail_tools_title" />
+
+                <TextView
+                    android:id="@+id/tvReleaseDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:paddingBottom="8dp"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:textColor="@android:color/darker_gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ivPoster"
+                    app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
+                    tools:text="string/movie_detail_tools_release_date" />
+
+                <TextView
+                    android:id="@+id/tvOverview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvReleaseDate"
+                    tools:text="@string/movie_detail_tools_overview" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="25dp"
+                    android:textColor="@android:color/black"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvOverview"
+                    tools:text="@string/movie_detail_tools_rating" />
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvRating"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="10dp"
+                    app:layout_collapseMode="parallax" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/movie_detail_more_feed_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    <include
+        android:id="@+id/shimmerLayout"
+        layout="@layout/layout_shimmer_movie_detail"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/errorLayout"
+        layout="@layout/layout_error_movie_detail"
+        android:visibility="gone" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

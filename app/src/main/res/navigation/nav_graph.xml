@@ -1,0 +1,59 @@
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/authScreen">
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.bedirhan.muuvi.feature.search.presentation.SearchMoviesFragment"
+        android:label="Search Movies"
+        tools:layout="@layout/fragment_search_movies" />
+    <fragment
+        android:id="@+id/movieDetailFragment"
+        android:name="com.bedirhan.muuvi.feature.movie_detail_screen.presentation.MovieDetailFragment"
+        android:label="Movie Detail"
+        tools:layout="@layout/fragment_movie_detail">
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+    </fragment>
+    <action
+        android:id="@+id/action_homeScreenFragment_to_movieDetailFragment"
+        app:destination="@id/movieDetailFragment" />
+    <fragment
+        android:id="@+id/homeScreenFragment"
+        android:name="com.bedirhan.muuvi.feature.home.presentation.HomeScreenFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home_screen">
+        <argument
+            android:name="userEmail"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+        <action
+            android:id="@+id/action_homeScreenFragment_to_listMoviesFragment"
+            app:destination="@id/listMoviesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/authScreen"
+        android:name="com.bedirhan.muuvi.feature.authentication.presentation.AuthScreenFragment"
+        android:label="Authorization"
+        tools:layout="@layout/fragment_auth_screen">
+        <action
+            android:id="@+id/action_authScreen_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listMoviesFragment"
+        android:name="com.bedirhan.muuvi.feature.list_movies.presentation.ListMoviesFragment"
+        android:label="fragment_list_movies"
+        tools:layout="@layout/fragment_list_movies" >
+        <argument
+            android:name="movieList"
+            app:argType="com.bedirhan.muuvi.feature.shared.movie.domain.uimodel.MovieListUiModel" />
+    </fragment>
+</navigation>

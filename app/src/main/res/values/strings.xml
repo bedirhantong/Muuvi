@@ -1,3 +1,63 @@
 <resources>
     <string name="app_name">Muuvi</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Drawer Strings -->
+    <string name="header_title">Muuvi</string>
+
+    <!-- Auth Strings -->
+    <string name="password_required">Password is required</string>
+    <string name="password_detail">Password must be at least 8 characters, contain a special character, and a capital letter</string>
+    <string name="auth_header">Muuvi.</string>
+    <string name="auth_description">Please login to your account</string>
+    <string name="email_hint">Email Address</string>
+    <string name="full_name_hint">Full Name</string>
+    <string name="password_hint">Password</string>
+    <string name="confirm_password_hint">Confirm Password</string>
+    <string name="login_button">Login</string>
+    <string name="signup_button">Signup</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="github_me">github/bedirhantong</string>
+
+    <!-- Home Strings -->
+    <string name="home_see_all">See all</string>
+    <string name="home_popular_title">Popular</string>
+    <string name="home_upcoming_title">Upcoming</string>
+    <string name="home_trending_title">Trending</string>
+    <string name="home_movie_title">Movie Title</string>
+
+    <!-- Movie Detail Strings -->
+    <string name="movie_detail_tools_title">Movie Title</string>
+    <string name="movie_detail_tools_release_date">Movie Title</string>
+    <string name="movie_detail_tools_overview">Movie overview goes here. This is a brief description of the movie plot and main points.</string>
+    <string name="movie_detail_tools_rating">Rating: 8.5/10</string>
+    <string name="movie_detail_error">Failed to load movie details.</string>
+    <string name="movie_detail_retry">Retry</string>
+    <string name="movie_detail_no_title">No Title</string>
+    <string name="movie_detail_no_overview">No Overview</string>
+
+    <!-- Search Strings -->
+    <string name="search_screen_title">You can Search for a Movies</string>
+
+    <!-- Movie List Strings -->
+    <string name="movie_list_tools_title">Movie Title</string>
+    <string name="movie_list_tools_release_date">Movie Title</string>
+    <string name="movie_list_tools_overview">Movie overview goes here. This is a brief description of the movie plot and main points.</string>
+    <string name="movie_list_tools_rating">8.5/10</string>
+    <string name="movie_list_tools_vote">1234 votes</string>
+
+    <!-- Utility Strings -->
+    <string name="extension_snackbar_error">An error occurred</string>
+    <string name="extension_snackbar_success">Success</string>
+    <string name="extension_snackbar_info">Information</string>
+
+    <!-- Viewpager & Tab Layout Strings -->
+    <string name="cast">Cast</string>
+    <string name="similar_movies">Similar Movies</string>
+    <string name="login">Login</string>
+    <string name="signup">Signup</string>
+
+
 </resources>
